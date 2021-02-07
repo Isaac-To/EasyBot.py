@@ -11,5 +11,4 @@ A premade plugin called chess.py is availible by default. This is based on the S
 
 By using this program, you hereby agree to the terms of the license agreement included.
 
-If you enjoyed this program, please become a sponsor at https://github.com/chisaku-dev/!
 Created by chisaku-dev on 2/6/2021
