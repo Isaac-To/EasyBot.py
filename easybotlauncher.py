@@ -1,10 +1,11 @@
 #ui
 from tkinter import *
-
 #to read savefile
 import sqlite3
-
+#discord bot
 import discordbot
+
+#saving information to database
 def save_information(name, token, prefix):
     conn = sqlite3.connect('save_file.db')
     conn.execute('''CREATE TABLE IF NOT EXISTS saved_information (
@@ -18,15 +19,17 @@ def save_information(name, token, prefix):
     conn.commit()
     conn.close()
 
+#main script
 conn = sqlite3.connect('save_file.db')
 try:
+    #attempt login discord
     cur = conn.cursor()
     cur.execute('SELECT name, token, prefix FROM saved_information;')
     saved_information_tuple = cur.fetchone()
     discordbot.startup(saved_information_tuple[0], saved_information_tuple[1], saved_information_tuple[2])
     #conn.close()
 except sqlite3.Error:
-    #ui
+    #upon error start ui
     #window
     tkWindow = Tk()  
     tkWindow.geometry('400x150')  
