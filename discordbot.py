@@ -38,7 +38,6 @@ def startup(name, token, prefix):
                     bot.load_extension(f'cogs.{cog}')
                 except:
                     print(f'There was an error at {cog}')
-            print('All cogs were initialized successfully')
         else:
             print('No plugins were detected')
         #starting up bot
