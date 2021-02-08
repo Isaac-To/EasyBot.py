@@ -14,7 +14,14 @@ async def cog(bot):
             bot.load_extension(f'cogs.{cog}')
             print(f'{cog} is loaded')
         except discord.ext.commands.ExtensionAlreadyLoaded:
-            await asyncio.sleep(0)
+            print(f'{cog} is already loaded; There may be a duplicate file')
+        except:
+            print(f'There was an error with {cog}')
+    
+async def background_activities(bot):
+    await bot.change_presence(activity=discord.Activity(
+                type = discord.ActivityType.listening,
+                name=(f" {len(bot.guilds)} servers!")))
 
 #bot main
 def startup(name, token, prefix):
@@ -38,13 +45,10 @@ def startup(name, token, prefix):
     @bot.event
     #starting up bot
     async def on_ready():
-        print(f'Logged in as {bot.user.name} - {bot.user.id}')
         await cog(bot)
+        print(f'Logged in as {bot.user.name} - {bot.user.id}')
         while True:
-            #load all detected cogs
-            await bot.change_presence(activity=discord.Activity(
-                type = discord.ActivityType.listening,
-                name=(f" {len(bot.guilds)} servers!")))
+            await background_activities(bot)
     
     #when bot has a command error
     @bot.event
