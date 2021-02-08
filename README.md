@@ -11,6 +11,6 @@ A premade plugin called chess.py is availible by default. This is based on the S
 
 By using this program, you hereby agree to the terms of the license agreement included.
 
-"Official" plugins can be found by looking at my other repositories that are labeled "for Easy-Bot".
+"Official" plugins can be found by looking at my other repositories that are labeled "Easy-Bot".
 
 Created by chisaku-dev on 2/6/2021
