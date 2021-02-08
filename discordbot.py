@@ -3,7 +3,6 @@ import discord
 from discord.ext import commands
 
 import os
-import asyncio
 
 async def cog(bot):
     #refresh cogs
