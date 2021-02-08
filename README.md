@@ -18,7 +18,7 @@ A premade plugin called chess.py is availible by default. This is based on the S
 **"Official" plugins can be found by looking at my other repositories that are labeled "Easy-Bot".**
 
 #### To reset bot prefix/name/token
-Just delete 'savefile.db' in the same folder where easy-bot is stored!
+Just delete 'savefile.db' in the same folder where easy-bot is stored and everything will be reset!
 
 ### Terms
 By using this program, you hereby agree to the terms of the license agreement included.
