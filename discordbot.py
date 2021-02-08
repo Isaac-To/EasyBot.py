@@ -39,9 +39,9 @@ def startup(name, token, prefix):
     #starting up bot
     async def on_ready():
         print(f'Logged in as {bot.user.name} - {bot.user.id}')
+        await cog(bot)
         while True:
             #load all detected cogs
-            await cog(bot)
             await bot.change_presence(activity=discord.Activity(
                 type = discord.ActivityType.listening,
                 name=(f" {len(bot.guilds)} servers!")))
