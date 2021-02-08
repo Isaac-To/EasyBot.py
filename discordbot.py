@@ -20,7 +20,7 @@ async def cog(bot):
 async def background_activities(bot):
     await bot.change_presence(activity=discord.Activity(
                 type = discord.ActivityType.listening,
-                name=(f" {len(bot.guilds)} servers!")))
+                name=("{} servers!").format(len(bot.guilds))))
 
 #bot main
 def startup(name, token, prefix):
