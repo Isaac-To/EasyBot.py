@@ -17,6 +17,9 @@ To install a plugin, simply drag the .py file into the cogs folder and the bot w
 A premade plugin called chess.py is availible by default. This is based on the Sunfish engine and is adapted to discord use by chisaku-dev.
 **"Official" plugins can be found by looking at my other repositories that are labeled "Easy-Bot".**
 
+#### To remove a plugin
+Just drag/delete the plugin's .py file out of the cogs folder and it will not be loaded up upon the next boot!
+
 #### To reset bot prefix/name/token
 Just delete 'savefile.db' in the same folder where easy-bot is stored and everything will be reset!
 
