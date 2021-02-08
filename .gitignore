@@ -2,3 +2,5 @@ save_file.db
 cogs/__pycache__/chess.cpython-39.pyc
 __pycache__/discordbot.cpython-39.pyc
 .vscode/settings.json
+reddit.db
+cogs/__pycache__/reddit.cpython-39.pyc
