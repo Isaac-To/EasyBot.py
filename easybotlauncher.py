@@ -39,7 +39,7 @@ except sqlite3.Error:
     tokenLabel = Label(tkWindow, text="token").grid(row=0, column=0)
     token = StringVar()
     tokenEntry = Entry(tkWindow, textvariable=token).grid(row=0, column=1)
-    tokenLabel = Label(tkWindow, text="You can get this from the discord developers portal").grid(row=1, column=2)
+    tokenLabel = Label(tkWindow, text="You can get this from the discord developers portal").grid(row=0, column=2)
 
     prefixLabel = Label(tkWindow, text="prefix").grid(row=2, column=0)
     prefix = StringVar()
