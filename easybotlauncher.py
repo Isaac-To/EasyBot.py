@@ -14,7 +14,7 @@ def save_information(token, prefix):
         ''')
     conn.commit()
     conn.execute('''INSERT INTO saved_information (token, prefix)
-        VALUES (?, ?, ?)''', (token, prefix))
+        VALUES (?, ?)''', (token, prefix))
     conn.commit()
     conn.close()
 
