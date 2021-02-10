@@ -6,16 +6,15 @@ import sqlite3
 import discordbot
 
 #saving information to database
-def save_information(name, token, prefix):
+def save_information(token, prefix):
     conn = sqlite3.connect('save_file.db')
     conn.execute('''CREATE TABLE IF NOT EXISTS saved_information (
-        name text,
         token text,
         prefix text);
         ''')
     conn.commit()
-    conn.execute('''INSERT INTO saved_information (name, token, prefix)
-        VALUES (?, ?, ?)''', (name, token, prefix))
+    conn.execute('''INSERT INTO saved_information (token, prefix)
+        VALUES (?, ?, ?)''', (token, prefix))
     conn.commit()
     conn.close()
 
@@ -24,9 +23,9 @@ conn = sqlite3.connect('save_file.db')
 try:
     #attempt login discord
     cur = conn.cursor()
-    cur.execute('SELECT name, token, prefix FROM saved_information;')
+    cur.execute('SELECT token, prefix FROM saved_information;')
     saved_information_tuple = cur.fetchone()
-    discordbot.startup(saved_information_tuple[0], saved_information_tuple[1], saved_information_tuple[2])
+    discordbot.startup(saved_information_tuple[0], saved_information_tuple[1])
     #conn.close()
 except sqlite3.Error:
     #upon error start ui
