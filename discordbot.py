@@ -1,8 +1,8 @@
 #discord
 import discord
 from discord.ext import commands
-
 import os
+import asyncio
 
 async def cog(bot):
     #refresh cogs
@@ -19,6 +19,7 @@ async def cog(bot):
     
 async def background_activities(bot):
     #bot server count is reported in activity
+    await asyncio.sleep(15)
     await bot.change_presence(activity=discord.Activity(
                 type = discord.ActivityType.listening,
                 name=("{} servers!").format(len(bot.guilds))))
