@@ -5,3 +5,6 @@ __pycache__/discordbot.cpython-39.pyc
 reddit.db
 cogs/__pycache__/reddit.cpython-39.pyc
 cogs/__pycache__/ranks.cpython-39.pyc
+__pycache__/discordbot.cpython-38.pyc
+cogs/__pycache__/chess.cpython-38.pyc
+cogs/__pycache__/invitation.cpython-38.pyc

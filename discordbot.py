@@ -48,6 +48,7 @@ def startup(token, prefix):
     async def on_ready():
         await cog(bot)
         print(f'Logged in as {bot.user.name} - {bot.user.id}')
+        print(f'Invite me with https://discord.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
         while True:
             await background_activities(bot)
     
