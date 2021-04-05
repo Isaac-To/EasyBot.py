@@ -4,3 +4,4 @@ __pycache__/discordbot.cpython-39.pyc
 .vscode/settings.json
 reddit.db
 cogs/__pycache__/reddit.cpython-39.pyc
+cogs/__pycache__/ranks.cpython-39.pyc

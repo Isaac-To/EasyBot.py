@@ -5,6 +5,10 @@ import sqlite3
 #discord bot
 import discordbot
 
+import pathlib
+import os
+os.chdir(pathlib.Path(__file__).parent.absolute())
+
 #saving information to database
 def save_information(token, prefix):
     conn = sqlite3.connect('save_file.db')
