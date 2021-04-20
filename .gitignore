@@ -8,3 +8,6 @@ cogs/__pycache__/ranks.cpython-39.pyc
 __pycache__/discordbot.cpython-38.pyc
 cogs/__pycache__/chess.cpython-38.pyc
 cogs/__pycache__/invitation.cpython-38.pyc
+Pipfile
+Pipfile.lock
+data/bots.easybot

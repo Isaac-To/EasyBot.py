@@ -1,74 +1,109 @@
-#to read savefile
-import sqlite3
-#discord bot
-import discordbot
+#built in
+import multiprocessing
+import json
+#self
+import ui
+import discordbot as db
 
-import pathlib
-import os
-os.chdir(pathlib.Path(__file__).parent.absolute())
+class core():
+    threads = []
 
-#saving information to database
-def save_information(token, prefix):
-    conn = sqlite3.connect('save_file.db')
-    conn.execute('''CREATE TABLE IF NOT EXISTS saved_information (
-        token text,
-        prefix text);
-        ''')
-    conn.commit()
-    conn.execute('''INSERT INTO saved_information (token, prefix)
-        VALUES (?, ?)''', (token, prefix))
-    conn.commit()
-    conn.close()
+    def boot(bot):
+        core.threads.append(multiprocessing.Process(target=db.main, args=(bot['token'], bot['prefix'])))
+        core.threads[-1].start()
+        return
 
-def login(conn):
-    #attempt login discord
-    cur = conn.cursor()
-    cur.execute('SELECT token, prefix FROM saved_information;')
-    saved_information_tuple = cur.fetchone()
-    discordbot.startup(saved_information_tuple[0], saved_information_tuple[1])
+class data:
+    def save(tk, px):
+        bot_save = open('./data/bots.easybot',"a")
+        save_dict = dict(token=tk, prefix=px)
+        bot_save.write(f'{json.dumps(save_dict)}\n')
+        bot_save.close()
+        return
 
-def no_gui_boot():
-    #main script UI
-    conn = sqlite3.connect('save_file.db')
-    try:
-        #attempt login discord
-        login(conn)
-    except:
-        token = input('Token: ')
-        token = input('Prefix: ')
-        save_information(token, prefix)
-        discordbot.startup(token, prefix)
+    def extract():
+        bot_save = open('./data/bots.easybot', "r")
+        bots = bot_save.readlines()
+        bots = [json.loads(s.replace('\n', '')) for s in bots]
+        bot_save.close()
+        return bots
 
-#main script UI
-conn = sqlite3.connect('save_file.db')
-#ui
-try:
-    from tkinter import *
-    try:
-        #attempt login discord
-        login(conn)
-    except sqlite3.Error:
-        #upon error start ui
-        #window
-        tkWindow = Tk()  
-        tkWindow.geometry('400x150')  
-        tkWindow.title('easybot.py by Chisaki-Dev')
-        
-        #token label and text entry box
-        tokenLabel = Label(tkWindow, text="token").grid(row=0, column=0)
-        token = StringVar()
-        tokenEntry = Entry(tkWindow, textvariable=token).grid(row=0, column=1)
-        tokenLabel = Label(tkWindow, text="You can get this from the discord developers portal").grid(row=0, column=2)
+    def extract_tks():
+        bots = data.extract()
+        bots = [s['token'] for s in bots]
+        return bots
+    
+    def remove(line_num):
+        bots = data.extract()
+        del bots[line_num]
+        bot_save = open('./data/bots.easybot', "w+")
+        bot_save.write('\n'.join(bots))
+        bot_save.close()
 
-        prefixLabel = Label(tkWindow, text="prefix").grid(row=2, column=0)
-        prefix = StringVar()
-        prefixEntry = Entry(tkWindow, textvariable=prefix).grid(row=2, column=1)
-        prefixLabel = Label(tkWindow, text="This will be what you put before you execute a command").grid(row=2, column=2)
-
-        #startup button
-        startupButton = Button(tkWindow, text="start easybot.py", command=lambda:[tkWindow.withdraw(), save_information(token.get(), prefix.get()), discordbot.startup(token.get(), prefix.get())]).grid(row=6, column=1)  
-
-        tkWindow.mainloop()
-except:
-    print('Will commence non-gui boot...')
-    no_gui_boot()
+if __name__ == '__main__':
+    bt_threads = []
+    while True:
+        try:
+            choices = ['Add bot(s)', 'Remove bot(s)', 'Boot all', 'Boot specific', 'Start selected', 'Quit']
+            while True:
+                ui.num_list(choices)
+                try:
+                    choice = int(input('Enter the number you wish to execute:\n'))
+                    break
+                except ValueError as e:
+                    ui.sys_message(e)
+            if choices[choice] == 'Add bot(s)':
+                tks = input('What is your bot token(s) (if multiple, seperate them with spaces)? Obtain it from https://discord.com/developers/ and paste it here: ')
+                tks = tks.split(' ')
+                for tk in tks:
+                    data.save(tk, input('Prefix: '))
+                ui.sys_message('Success')
+            elif choices[choice] == 'Remove bot(s)':
+                bot = data.extract()
+                ui.num_list(bot)
+                if bot != []:
+                    while True:
+                        bot_rm_nums = input('Select the bots you wish to remove by listing the number corrosponding (e.g. 1 2 4): ')
+                        bot_rm_nums = bot_rm_nums.split(' ')
+                        try:
+                            bot_rm_nums = sorted(list(map(int, bot_rm_nums)))
+                            break
+                        except ValueError as e:
+                            print(e)
+                    for i in range(0, len(bot_rm_nums)):
+                        if i > 0:
+                            bot_rm_nums[i] -= i
+                    for bot_rm_num in bot_rm_nums:
+                        data.remove(bot_rm_num)
+                    ui.sys_message('Success')
+                else:
+                    ui.sys_message('There are no bots stored')
+            elif choices[choice] == 'Boot all':
+                bots = data.extract()
+                if bots != []:
+                    for bot in bots:
+                        core.boot(bot)
+                else:
+                    ui.sys_message('There are no bots stored')
+            elif choices[choice] == 'Boot specific':
+                bots = data.extract()
+                ui.num_list(bots)
+                if bots != []:
+                    while True:
+                        bot_st_nums = input('Select the bots you wish to boot by listing the number corrosponding (e.g. 1 2 4): ')
+                        bot_st_nums = bot_st_nums.split(' ')
+                        try:
+                            bot_st_nums = sorted(list(map(int, bot_st_nums)))
+                            break
+                        except ValueError as e:
+                            print(e)
+                    for bot_st_num in bot_st_nums:
+                        core.boot(bots[bot_st_num])
+                else:
+                    ui.sys_message('There are no bots stored')
+            elif choices[choice] == 'Startup selected':
+                core.startup()
+            elif choices[choice] == 'Quit':
+                quit()
+        except:
+            print('There has been an error')

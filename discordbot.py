@@ -1,39 +1,32 @@
 #discord
 import discord
 from discord.ext import commands
+#built in
 import os
-import asyncio
+#self
+import ui
 
-async def cog(bot):
-    #refresh cogs
+async def cog(client):
+#cogs detection
     cogs = [f for f in os.listdir('./cogs') if f.endswith('.py')]
     for cog in cogs:
         cog = cog.replace('.py', '')
         try:
-            bot.load_extension(f'cogs.{cog}')
+            client.load_extension(f'cogs.{cog}')
             print(f'{cog} is loaded')
         except discord.ext.commands.ExtensionAlreadyLoaded:
             print(f'{cog} is already loaded; There may be a duplicate file')
         except:
             print(f'There was an error with {cog}')
-    
-async def background_activities(bot):
-    #bot server count is reported in activity
-    await asyncio.sleep(15)
-    await bot.change_presence(activity=discord.Activity(
-                type = discord.ActivityType.listening,
-                name=("{} servers!").format(len(bot.guilds))))
 
 #bot main
-def startup(token, prefix):
-    #declare bot
-    bot = commands.Bot(
-        command_prefix=prefix,
-        help=f'A bot made with Easybot by Chisaku-Dev',
-        case_insensitive=True
-    )
+def main(token, prefix):
+    def __init__(self, client):
+        self.client = client
+    
+    bot = commands.Bot(command_prefix=prefix)
 
-    #embed help
+    #embed help command
     class helpcommand(commands.MinimalHelpCommand):
         async def send_pages(self):
             destination = self.get_destination()
@@ -44,17 +37,10 @@ def startup(token, prefix):
     bot.help_command = helpcommand()
 
     @bot.event
-    #starting up bot
     async def on_ready():
+        ui.sys_message('Successfully booted')
         await cog(bot)
-        print(f'Logged in as {bot.user.name} - {bot.user.id}')
-        print(f'Invite me with https://discord.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
-        while True:
-            await background_activities(bot)
+        print(f'USN:{bot.user.name}\nUID:{bot.user.id}\nInvite: https://discord.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
+        await bot.change_presence(activity=discord.Activity (type=discord.ActivityType.listening, name=f'you for when you use {prefix}'))
     
-    #when bot has a command error
-    @bot.event
-    async def on_command_error(ctx, error):
-        await ctx.send(error)
-    
-    bot.run(token, bot=True, reconnect=True)
+    bot.run(token)

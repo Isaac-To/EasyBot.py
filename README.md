@@ -6,15 +6,13 @@
 
 Easy-Bot.py REQUIRES PYTHON 3.6+ to be installed (DEVELOPED ON PYTHON 3.9).
 
-Everything else is handled by Easy-Bot! All libaries you need to do is to run are installed by start.bat and will be completely handled **automatically** (unless a plugin requires a specific library to function which you can add to start.bat)!
-
-If not on a windows machine, rename start.bat to start.sh and everything should work as expected!
+The only library this uses is the Discord Library (install this with pip install discord)
 
 ## HOW TO USE
 
 ### To start the bot
 
-Just run start.bat
+Just execute easybotlauncher.py with python3 easybotlauncher.py or python easybotlauncher depending on your system!
 
 ### To install a plugin
 
@@ -25,10 +23,6 @@ A premade plugin called chess.py is available by default. This is based on the S
 ### To remove a plugin
 
 Just drag/delete the plugin's .py file out of the cogs folder and it will not be loaded up upon the next boot!
-
-### To reset bot prefix/name/token
-
-Just delete 'savefile.db' in the same folder where easy-bot is stored and everything will be reset!
 
 ## Terms
 
