@@ -11,3 +11,4 @@ cogs/__pycache__/invitation.cpython-38.pyc
 Pipfile
 Pipfile.lock
 data/bots.easybot
+__pycache__/ui.cpython-38.pyc
