@@ -1,0 +1,29 @@
+#declare the libraries that will be used in the plugin. Some libraries may need to be installed which you should prompt to the user.
+from discord.ext import commands
+import discord
+
+#declare the category that the plugin will fit into e.g. General_Commands
+class General_Commands(commands.Cog);
+    #allow bot to be called in commands with self.bot
+    def __init__(self, bot):
+        self.bot = bot
+    #for commands, you can include name, help information and whether to pass context along. Name is what the command is referred as. 
+    #Help information will be shown when /{bot_name} help is called.
+    @commands.command(
+        name='hi',
+        help='say hi',
+        pass_context=False
+        )
+    #define what the command needs
+    async def say_hi(self, ctx):
+        #below here is where you program what to have it do e.g. say Hi! when it's called
+        await ctx.send('Hi!')
+    #for events use commands.Cog.listener instead of commands.command
+    @commands.Cog.listener()
+    #define what the command needs
+    async def on_message(self, message):
+        #program what it does e.g. repeating the message
+        await message.channel.send(message)
+#again state what the category the bot will fit into e.g. General_Commands
+def setup(bot):
+    bot.add_cog(Utility(bot))
