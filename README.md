@@ -18,7 +18,7 @@ To install a plugin, simply drag the .py file into the cogs folder and the bot w
 By default, a plugin called invitation is included which has the command invite. This is used to generate a link to invite the bot to another server.
 **"Official" plugins can be found by looking at my other repositories that are labeled "Easy-Bot".**
 
-## To make your own plugin
+### To make your own plugin
 Check out example_plugin.pyexample. It includes the basic outline of how your should structure your plugin. This is based on discord.py's cog structure.
 
 ### To remove a plugin
