@@ -26,4 +26,4 @@ class General_Commands(commands.Cog);
         await message.channel.send(message)
 #again state what the category the bot will fit into e.g. General_Commands
 def setup(bot):
-    bot.add_cog(Utility(bot))
+    bot.add_cog(General_Commands(bot))
