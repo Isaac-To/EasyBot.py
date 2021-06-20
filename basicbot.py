@@ -47,7 +47,7 @@ def main(token, prefix):
         print(f'USN:{bot.user.name}\nUID:{bot.user.id}\nInvite: https://discord.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8 \n')
         presense =  f" your call using {prefix}"
         if prefix.endswith(' '):
-            presense = presense + f'; Note: there is a space following {prefix}'
+            presense = presense + f'; Note: there is a space following {prefix[:-1]}'
         await bot.change_presence(activity=discord.Activity (type=discord.ActivityType.listening, name=presense))
 
     #error response
@@ -61,4 +61,4 @@ def main(token, prefix):
     except Exception as e:
         #will state when an invalid token has been used
         eb_ui.sys_message(e)
-        os._exit(1)
+        return

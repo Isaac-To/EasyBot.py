@@ -11,10 +11,15 @@ class core():
     threads = []
 
     def boot(bot):
-        core.threads.append(multiprocessing.Process(target=db.main, args=(bot['token'], bot['prefix'])))
-        core.threads[-1].start()
-        time.sleep(5)
+        core.threads.append((bot['token'], multiprocessing.Process(target=db.main, args=(bot['token'], bot['prefix']))))
+        core.threads[-1][1].start()
 
+    def list_threads():
+        eb_ui.num_list(core.threads)
+
+    def stop(bot_num):
+        core.threads[bot_num][1].terminate()
+        core.threads.remove(core.threads[bot_num])
 
 class data:
     def save(tk, px):
@@ -50,7 +55,7 @@ if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     while True:
         try:
-            choices = ['Add bot(s)', 'Remove bot(s)', 'Boot all', 'Boot specific', 'Boot w/o saving token', 'Quit']
+            choices = ['Add bot(s)', 'Remove bot(s)', 'Boot all', 'Boot specific', 'Boot w/o saving token', 'Stop Specific', 'Quit']
             while True:
                 eb_ui.num_list(choices)
                 try:
@@ -112,6 +117,25 @@ if __name__ == '__main__':
                 px = input('What is the desired bot prefix?\n')
                 bot = dict(token = tk, prefix = px)
                 core.boot(bot)
+            elif choices[choice] == 'Stop Specific':
+                core.list_threads()
+                if bot != []:
+                    while True:
+                        bot_stp_nums = input('Select the bots you wish to stop by listing the number corrosponding (e.g. 1 2 4): ')
+                        bot_stp_nums = bot_stp_nums.split(' ')
+                        try:
+                            bot_stp_nums = sorted(list(map(int, bot_stp_nums)))
+                            break
+                        except ValueError as e:
+                            print(e)
+                    for i in range(0, len(bot_stp_nums)):
+                        if i > 0:
+                            bot_stp_nums[i] -= i
+                    for bot_stp_num in bot_stp_nums:
+                        core.stop(bot_stp_num)
+                    eb_ui.sys_message('Success')
+                else:
+                    eb_ui.sys_message('There are no bots running')
             elif choices[choice] == 'Quit':
                 os._exit(0)
         except Exception as e:
