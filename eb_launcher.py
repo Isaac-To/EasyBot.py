@@ -7,18 +7,18 @@ import eb_ui
 import basicbot as db
 
 class core():
-    threads = []
+    processes = []
 
     def boot(bot):
-        core.threads.append((bot['token'], multiprocessing.Process(target=db.main, args=(bot['token'], bot['prefix']))))
-        core.threads[-1][1].start()
+        core.processes.append((bot['token'], multiprocessing.Process(target=db.main, args=(bot['token'], bot['prefix']))))
+        core.processes[-1][1].start()
 
     def list_threads():
-        eb_ui.num_list(core.threads)
+        eb_ui.num_list(core.processes)
 
     def stop(bot_num):
-        core.threads[bot_num][1].terminate()
-        core.threads.remove(core.threads[bot_num])
+        core.processes[bot_num][1].terminate()
+        core.processes.remove(core.processes[bot_num])
 
 class data:
     def save(tk, px):
@@ -136,6 +136,6 @@ if __name__ == '__main__':
                 else:
                     eb_ui.sys_message('There are no bots running')
             elif choices[choice] == 'Quit':
-                os._exit(0)
+                quit()
         except Exception as e:
             print(f'There has been an error: {e}')
