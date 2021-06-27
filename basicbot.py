@@ -4,7 +4,7 @@ from discord.ext import commands
 #built in
 import os
 #self
-import eb_ui
+import ui
 
 async def cog(client):
 #cogs detection
@@ -42,7 +42,7 @@ def main(token, prefix):
     #on boot
     @bot.event
     async def on_ready():
-        eb_ui.sys_message('Successfully booted')
+        ui.sys_message('Successfully booted')
         await cog(bot)
         print(f'USN:{bot.user.name}\nUID:{bot.user.id}\nInvite: https://discord.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8 \n')
         presense =  f" your call using {prefix}"
@@ -60,5 +60,5 @@ def main(token, prefix):
         bot.run(token)
     except Exception as e:
         #will state when an invalid token has been used
-        eb_ui.sys_message(e)
+        ui.sys_message(e)
         return
