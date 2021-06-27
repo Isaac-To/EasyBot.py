@@ -10,14 +10,14 @@ class core():
     processes = []
 
     def boot(bot):
-        core.processes.append((bot['token'], multiprocessing.Process(target=db.main, args=(bot['token'], bot['prefix']))))
-        core.processes[-1][1].start()
+        core.processes.append((bot['token'], bot['prefix'], multiprocessing.Process(target=db.main, args=(bot['token'], bot['prefix']))))
+        core.processes[-1][2].start()
 
     def list_threads():
         eb_ui.num_list(core.processes)
 
     def stop(bot_num):
-        core.processes[bot_num][1].terminate()
+        core.processes[bot_num][2].terminate()
         core.processes.remove(core.processes[bot_num])
 
 class data:
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     while True:
         try:
-            choices = ['Add bot(s)', 'Remove bot(s)', 'Boot all', 'Boot specific', 'Boot w/o saving token', 'Stop Specific', 'Quit']
+            choices = ['Add bot(s)', 'Remove bot(s)', 'Boot all', 'Boot specific', 'Boot w/o saving token', 'Stop Specific', 'Restart Specific', 'Quit']
             while True:
                 eb_ui.num_list(choices)
                 try:
@@ -116,9 +116,30 @@ if __name__ == '__main__':
                 px = input('What is the desired bot prefix?\n')
                 bot = dict(token = tk, prefix = px)
                 core.boot(bot)
+            elif choices[choice] == 'Restart Specific':
+                core.list_threads()
+                if core.processes != []:
+                    while True:
+                        bot_stp_nums = input('Select the bots you wish to restart by listing the number corrosponding (e.g. 1 2 4): ')
+                        bot_stp_nums = bot_stp_nums.split(' ')
+                        try:
+                            bot_stp_nums = sorted(list(map(int, bot_stp_nums)))
+                            break
+                        except ValueError as e:
+                            print(e)
+                    for i in range(0, len(bot_stp_nums)):
+                        if i > 0:
+                            bot_stp_nums[i] -= i
+                    for bot_stp_num in bot_stp_nums:
+                        bot = core.processes[bot_stp_num]
+                        core.stop(bot_stp_num)
+                        core.boot(dict(token = bot[0], prefix = bot[1]))
+                    eb_ui.sys_message('Successfully restarted the bots')
+                else:
+                    eb_ui.sys_message('There are no bots running')
             elif choices[choice] == 'Stop Specific':
                 core.list_threads()
-                if bot != []:
+                if core.processes != []:
                     while True:
                         bot_stp_nums = input('Select the bots you wish to stop by listing the number corrosponding (e.g. 1 2 4): ')
                         bot_stp_nums = bot_stp_nums.split(' ')
@@ -132,7 +153,7 @@ if __name__ == '__main__':
                             bot_stp_nums[i] -= i
                     for bot_stp_num in bot_stp_nums:
                         core.stop(bot_stp_num)
-                    eb_ui.sys_message('Success')
+                    eb_ui.sys_message('Successfully stopped the bots')
                 else:
                     eb_ui.sys_message('There are no bots running')
             elif choices[choice] == 'Quit':
