@@ -3,6 +3,7 @@ import discord
 from discord.ext import commands
 #built in
 import os
+import subprocess
 #self
 import ui
 
@@ -14,13 +15,21 @@ async def cog(client):
         print('This may take a while... please wait patiently')
     for cog in cogs:
         cog = cog.replace('.py', '')
-        try:
-            client.load_extension(f'cogs.{cog}')
-            print(f'{cog} is loaded successfully')
-        except discord.ext.commands.ExtensionAlreadyLoaded:
-            print(f'{cog} is already loaded; There may be a duplicate file or another version present')
-        except Exception as e:
-            print(f'There was an error with {cog} with the error: {e}\n {cog} will be skipped')
+        while True:
+            try:
+                client.load_extension(f'cogs.{cog}')
+                print(f'{cog} is loaded successfully')
+                break
+            except discord.ext.commands.ExtensionAlreadyLoaded:
+                print(f'{cog} is already loaded; There may be a duplicate file or another version present')
+                break
+            except Exception as e:
+                e = str(e)
+                if 'ModuleNotFoundError' in e:
+                    library_name = e[(72 + len(cog)):].replace("'", "")
+                    subprocess.call(f'pip3 install {library_name}', shell=False)
+                    print(library_name, 'has been installed')
+                else: print(f'There was an error with {cog} with the error: {e}\n {cog} will be skipped')
 
 #bot main
 def main(token, prefix):
@@ -33,7 +42,7 @@ def main(token, prefix):
     class helpcommand(commands.MinimalHelpCommand):
         async def send_pages(self):
             destination = self.get_destination()
-            e = discord.Embed(color=0x1ABC9C, description='')
+            e = discord.Embed(description='')
             for page in self.paginator.pages:
                 e.description += page
             await destination.send(embed=e)

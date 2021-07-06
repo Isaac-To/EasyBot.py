@@ -1,7 +1,6 @@
 import subprocess
 
 def install(library_name):
-    subprocess.call(f'pip install {library_name}', shell=False)
     subprocess.call(f'pip3 install {library_name}', shell=False)
     print(f'Library {library_name} has been installed')
 
