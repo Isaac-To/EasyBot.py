@@ -4,6 +4,7 @@ from discord.ext import commands
 #built in
 import os
 import subprocess
+import time
 #self
 import ui
 
@@ -63,6 +64,12 @@ def main(token, prefix):
     @bot.event
     async def on_command_error(ctx, error):
         await ctx.send(error)
+
+    @bot.event
+    async def on_message(message):
+        if message.content.startswith(prefix) and message.author != bot.user:
+            print(time.strftime("%H:%M:%S", time.localtime()), bot.user.id, message.content)
+            await bot.process_commands(message)
 
     #start bot
     try:
