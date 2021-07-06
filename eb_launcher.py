@@ -23,10 +23,28 @@ def inputs():
             print(e)
     return nums
 
+def eula():
+    agreement = 'To use this program, you must agree to the EULA included.\nIf you agree to the CC1.0 LICENSE included by Chisaku-Dev switch the FALSE to a TRUE below\nFALSE'
+    if 'eula.txt' not in os.listdir(os.path.dirname(os.path.abspath(__file__))):
+        eula = open('eula.txt', 'w')
+        eula.write(agreement)
+        eula.close()
+        print('eula.txt has been generated, please agree to the EULA included')
+        quit()
+    else:
+        eula = open('eula.txt', 'r')
+        agree = eula.readlines()
+        if agree[2].upper() == 'TRUE':
+            return True
+        else:
+            print('You must agree to the EULA included.')
+            quit()
+
 if __name__ == '__main__':
-    subprocess.call(f'pip3 install discord', shell=False)
-    print('DiscordPy library has been installed')
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    eula()
+    subprocess.call(f'pip3 install discord', shell=False)
+    print('discord library has been installed')
     while True:
         try:
             choices = ['Add bot(s)', 'Remove bot(s)', 'Boot all', 'Boot specific', 'Boot w/o saving token', 'Stop Specific', 'Restart Specific', 'Quit']
