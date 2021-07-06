@@ -19,6 +19,9 @@ async def cog(client):
         while True:
             try:
                 client.load_extension(f'cogs.{cog}')
+                try:
+                    os.mkdir('./cogs/plugintool', mode = 0o666)
+                except: pass
                 print(f'{cog} is loaded successfully')
                 break
             except discord.ext.commands.ExtensionAlreadyLoaded:
