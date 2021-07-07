@@ -14,8 +14,7 @@ def offset(list):
 
 def inputs():
     while True:
-        nums = input('Select the bots you wish to select by listing the number corrosponding (e.g. 1 2 4): ')
-        nums = nums.split(' ')
+        nums = input('Select the bots you wish to select by listing the number corrosponding (e.g. 1 2 4): ').split(' ')
         try:
             nums = sorted(list(map(int, nums)))
             break
