@@ -24,21 +24,11 @@ def inputs():
     return nums
 
 def eula():
-    agreement = 'To use this program, you must agree to the EULA included.\nIf you agree to the CC1.0 LICENSE included by Chisaku-Dev switch the FALSE to a TRUE below\nFALSE'
-    if 'eula.txt' not in os.listdir(os.path.dirname(os.path.abspath(__file__))):
-        eula = open('eula.txt', 'w')
-        eula.write(agreement)
-        eula.close()
-        input('eula.txt has been generated, please agree to the EULA included')
+    if 'LICENSE' not in os.listdir(os.path.dirname(os.path.abspath(__file__))):
+        input('LICENSE does not exist; Please download it from https://github.com/chisaku-dev/EasyBot.py and try again')
         quit()
     else:
-        eula = open('eula.txt', 'r')
-        agree = eula.readlines()
-        if agree[2].upper() == 'TRUE':
-            return True
-        else:
-            input('You must agree to the EULA included.')
-            quit()
+        input(f"{open('LICENSE', 'r').read()}\n [If you press ENTER, you agree to the LICENSE included]")
 
 if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
