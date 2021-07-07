@@ -60,10 +60,13 @@ if __name__ == '__main__':
                 except ValueError as e:
                     ui.sys_message(e)
             if choices[choice] == 'Add bot(s)':
-                tks = input('What is your bot token(s) (if multiple, seperate them with spaces)? Obtain it from https://discord.com/developers/ and paste it here: ')
-                tks = tks.split(' ')
+                tks = input('What is your bot token(s) (if multiple, seperate them with spaces)? Obtain it from https://discord.com/developers/ and paste it here: ').split(' ')
+                exist_tks = data.extract_tks()
                 for tk in tks:
-                    data.save(tk, input('Prefix: '))
+                    if not tk in exist_tks:
+                        data.save(tk, input(f'Prefix for {tk}: '))
+                    else:
+                        print(tk, 'already exists in the database')
                 ui.sys_message('Success')
             elif choices[choice] == 'Remove bot(s)':
                 bot = data.extract()
