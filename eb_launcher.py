@@ -29,7 +29,7 @@ def eula():
         eula = open('eula.txt', 'w')
         eula.write(agreement)
         eula.close()
-        print('eula.txt has been generated, please agree to the EULA included')
+        input('eula.txt has been generated, please agree to the EULA included')
         quit()
     else:
         eula = open('eula.txt', 'r')
@@ -37,7 +37,7 @@ def eula():
         if agree[2].upper() == 'TRUE':
             return True
         else:
-            print('You must agree to the EULA included.')
+            input('You must agree to the EULA included.')
             quit()
 
 if __name__ == '__main__':
