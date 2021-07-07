@@ -43,6 +43,10 @@ def eula():
 if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     eula()
+    try:
+        os.mkdir('./data')
+        open('./data/bots.easybot', 'w').close()
+    except: pass
     subprocess.call(f'pip3 install discord', shell=False)
     print('discord library has been installed')
     while True:
@@ -113,6 +117,9 @@ if __name__ == '__main__':
                 else:
                     ui.sys_message('There are no bots running')
             elif choices[choice] == 'Quit':
+                if core.processes != []:
+                    for bots in range(0, len(core.processes)):
+                        core.stop(0)
                 quit()
         except Exception as e:
             print(f'There has been an error: {e}')
