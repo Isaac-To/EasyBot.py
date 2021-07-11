@@ -1,5 +1,6 @@
 import subprocess
 import os
+from discord import file
 import qrcode
 
 def install(library_name):
@@ -20,7 +21,7 @@ class Utility(commands.Cog):
     @commands.command(
         name='invite',
         help='Generates the link to invite bot',
-        )
+    )
     async def invite(self, ctx):
         link = f'https://discord.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=8'
         if not os.path.isfile('./cogs/plugintool/invite.png'):
@@ -33,6 +34,46 @@ class Utility(commands.Cog):
         embed.set_thumbnail(url=self.bot.user.avatar_url)
         embed.set_image(url='attachment://invite.png')
         await ctx.send(embed=embed, file=file)
+
+    @commands.command(
+        name='ping',
+        help='Test the latency of the bot'
+    )
+    async def ping(self, ctx):
+        ctx.send(f'Pong took {self.bot.latency} seconds 🏓')
+
+    @commands.command(
+        name='serverinfo',
+        help='Outputs known server information'
+    )
+    async def serverinfo(self, ctx):
+        guild = ctx.guild
+        name = guild.name
+        id = guild.id
+        channels = guild.channels
+        members = guild.member_count
+        premium_members = guild.premium_subscription_count
+        max_members = guild.max_members
+        location = guild.region
+        epox = guild.created_at
+        owner = guild.owner_id
+        explicit = guild.explicit_content_filter
+        embed = discord.Embed()
+        embed.title = f'Server Info'
+        embed.description = f'''
+        Name: {name}\n
+        ID: {id}\n
+        # of channels: {len(channels)}\n
+        # of nitro boosted members: {premium_members}\n
+        # of members: {members}/{max_members}\n
+        Located in {location}\n
+        Created on {epox}\n
+        Owned by UID: {owner}\n
+        Explicit content filter enabled for {explicit}\n
+        '''
+        embed.set_thumbnail(url=guild.icon_url)
+        await ctx.send(embed=embed)
+
 class Misc(commands.Cog):
     
     def __init__(self, bot):
