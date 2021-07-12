@@ -33,7 +33,9 @@ async def cog(client):
                     library_name = e[(72 + len(cog)):].replace("'", "")
                     subprocess.call(f'pip3 install {library_name}', shell=False)
                     print(library_name, 'has been installed')
-                else: print(f'There was an error with {cog} with the error: {e}\n {cog} will be skipped')
+                else:
+                    print(f'There was an error with {cog} with the error: {e}\n {cog} will be skipped')
+                    break
 
 #bot main
 def main(token, prefix):
