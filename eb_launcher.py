@@ -107,6 +107,9 @@ if __name__ == '__main__':
         os.mkdir('./data')
         open('./data/bots.easybot', 'w').close()
     except: pass
+    try:
+        os.mkdir('./cogs')
+    except: pass
     subprocess.call(f'pip3 install discord', shell=False)
     print('discord library has been installed')
     choices = {
