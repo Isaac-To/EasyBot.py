@@ -111,16 +111,13 @@ class Utility(commands.Cog):
 class Bot_Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        if not os.path.exists('./cogs/plugintool/ops'):
-            open('./cogs/plugintool/ops', 'w').close()
+    
+    @commands.is_owner()
     @commands.command(
         name='prune',
         help='Removes bot from servers smaller than the specified limit'
     )
     async def purge(self, ctx, minimum):
-        if not is_op(ctx.message.author.id):
-            await ctx.send("You don't have permission to use this command")
-            return
         guilds_left = 0
         embed = discord.Embed()
         embed.title = 'Notice of Leave'
@@ -142,6 +139,7 @@ class Bot_Admin(commands.Cog):
                 guilds_left += 1
                 await guild.leave()
         await ctx.send(f"Left {guilds_left} server(s)!")
+
 class Misc(commands.Cog):
     
     def __init__(self, bot):
