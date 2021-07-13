@@ -12,6 +12,7 @@ def install_multiple(libraries):
         install(library)
 
 def is_op(uid):
+    print(f'If you triggered this command, copy {uid} to ops in the cog/plugintool/ folder and rerun again. Otherwise, just ignore this message')
     op = open('./cogs/plugintool/ops', 'r')
     ops = op.readlines()
     if str(uid) in ops:
