@@ -72,8 +72,10 @@ def main(token, prefix):
 
     @bot.event
     async def on_message(message):
-        if message.content.startswith(prefix) and message.author != bot.user:
+        msg = str(message.content).lower()
+        if msg.startswith(prefix) and message.author != bot.user:
             print(time.strftime("%H:%M:%S", time.localtime()), bot.user.id, message.content)
+            message.content = str(message.content).lower()
             await bot.process_commands(message)
 
     #start bot
