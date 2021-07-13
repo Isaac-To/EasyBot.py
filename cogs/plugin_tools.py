@@ -164,7 +164,7 @@ class Bot_Admin(commands.Cog):
         for guild in self.bot.guilds:
             for channel in guild.channels:
                 try:
-                    await channel.send(msg)
+                    await channel.send(embed=embed)
                     break
                 except: pass
         await ctx.send(f"Message broadcasted to all servers connected")
