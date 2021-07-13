@@ -2,3 +2,4 @@ eula.txt
 Pipfile
 data/bots.easybot
 cogs/plugintool/invite.png
+cogs/plugintool/ops
