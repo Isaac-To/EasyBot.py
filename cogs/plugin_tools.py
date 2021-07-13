@@ -96,7 +96,7 @@ class Utility(commands.Cog):
             total_members += guild.member_count
         average_members_per_guild = total_members / len(guilds)
         embed = discord.Embed()
-        embed.title = f'Server Info'
+        embed.title = f'Bot Info'
         embed.description = f'''
         Name: {name}\n
         ID: {id}\n
