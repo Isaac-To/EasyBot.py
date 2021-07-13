@@ -159,12 +159,12 @@ class Bot_Admin(commands.Cog):
         guilds_left = 0
         embed = discord.Embed()
         embed.title = 'Notice of Leave'
-        embed.description = f'''{self.bot.user.name} will be leaving your server due to a lack of users;\n
-        This is done to ensure the bot can reach as many people as possible as discord limits the amount of servers one bot can be in to 100.\n
-        This limit is out of our control and the best solution is to trim down the number of smaller servers such that more people can enjoy this bot\n
-        It's been a joy working with you and your patrons!\n
+        embed.description = f'''{self.bot.user.name} will be leaving your server due to a lack of users;
+        This is done to ensure the bot can reach as many people as possible as discord limits the amount of servers one bot can be in to 100.
+        This limit is out of our control and the best solution is to trim down the number of smaller servers such that more people can enjoy this bot
+        It's been a joy working with you and your patrons!
         If you wish to invite me again, use https://discord.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=8\n\n\n
-        \tMay we meet again soon,\n
+        \tMay we meet again soon,
         {self.bot.user.name}'''
         embed.set_thumbnail(url=self.bot.user.avatar_url)
         for guild in self.bot.guilds:
