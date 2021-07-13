@@ -140,6 +140,27 @@ class Bot_Admin(commands.Cog):
                 await guild.leave()
         await ctx.send(f"Left {guilds_left} server(s)!")
 
+    @commands.isowner()
+    @commands.command(
+        name="broadcast",
+        help="Sends a broadcast to all servers this bot is connected to; Only use this for serious messages!"
+    )
+    async def broadcast(self, ctx):
+        def check(ms):
+            return ms.channel == ctx.message.channel and ms.author == ctx.message.author
+        await ctx.send('Enter your message:')
+        msg = await self.bot.wait_for('message', check=check)
+        embed = discord.Embed()
+        embed.title = f'{self.bot.user.name} Admin Broadcast'
+        embed.description = msg.content
+        for guild in self.bot.guilds:
+            for channel in guild.channels:
+                try:
+                    await channel.send(msg)
+                    break
+                except: pass
+        await ctx.send(f"Message broadcasted to all servers connected")
+
 class Misc(commands.Cog):
     
     def __init__(self, bot):
