@@ -1,6 +1,7 @@
 import subprocess
 import os
 import qrcode
+import image
 
 def install(library_name):
     subprocess.call(f'pip3 install {library_name}', shell=False)
@@ -39,7 +40,7 @@ class Utility(commands.Cog):
         help='Test the latency of the bot'
     )
     async def ping(self, ctx):
-        ctx.send(f'Pong took {self.bot.latency} seconds 🏓')
+        await ctx.send(f'Pong took {self.bot.latency} seconds 🏓')
 
     @commands.command(
         name='serverinfo',
