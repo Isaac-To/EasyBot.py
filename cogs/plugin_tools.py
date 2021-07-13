@@ -12,8 +12,8 @@ def install_multiple(libraries):
         install(library)
 
 def is_op(uid):
-    print(f'If you triggered this command, copy {uid} to ops in the cog/plugintool/ folder and rerun again. Otherwise, just ignore this message')
-    op = open('./cogs/plugintool/ops', 'r')
+    print(f'If you triggered this command, copy {uid} to ops in the cog/plugin_tool/ folder and rerun again. Otherwise, just ignore this message')
+    op = open('./cogs/plugin_tool/ops', 'r')
     ops = op.readlines()
     if str(uid) in ops:
         return True
@@ -33,10 +33,10 @@ class Utility(commands.Cog):
     )
     async def invite(self, ctx):
         link = f'https://discord.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=8'
-        if not os.path.isfile('./cogs/plugintool/invite.png'):
+        if not os.path.isfile('./cogs/plugin_tool/invite.png'):
             img = qrcode.make(link)
-            img.save('./cogs/plugintool/invite.png')
-        file = discord.File('./cogs/plugintool/invite.png')
+            img.save('./cogs/plugin_tool/invite.png')
+        file = discord.File('./cogs/plugin_tool/invite.png')
         embed = discord.Embed()
         embed.title = f'Invite {self.bot.user.name}'
         embed.description = link
@@ -211,10 +211,10 @@ class Misc(commands.Cog):
     )
     async def makeyourownbot(self, ctx):
         link = f'https://github.com/chisaku-dev/EasyBot.py'
-        if not os.path.isfile('./cogs/plugintool/makeyourownbot.png'):
+        if not os.path.isfile('./cogs/plugin_tool/makeyourownbot.png'):
             img = qrcode.make(link)
-            img.save('./cogs/plugintool/makeyourownbot.png')
-        file = discord.File('./cogs/plugintool/makeyourownbot.png')
+            img.save('./cogs/plugin_tool/makeyourownbot.png')
+        file = discord.File('./cogs/plugin_tool/makeyourownbot.png')
         embed = discord.Embed()
         embed.title = f'Make a bot like {self.bot.user.name}!'
         embed.description = link

@@ -20,7 +20,7 @@ async def cog(client):
             try:
                 client.load_extension(f'cogs.{cog}')
                 try:
-                    os.mkdir('./cogs/plugintool', mode = 0o666)
+                    os.mkdir(f'./cogs/{cog}', mode = 0o666)
                 except: pass
                 print(f'{cog} is loaded successfully')
                 break
@@ -48,10 +48,9 @@ def main(token, prefix):
     class helpcommand(commands.MinimalHelpCommand):
         async def send_pages(self):
             destination = self.get_destination()
-            e = discord.Embed(description='')
-            for page in self.paginator.pages:
-                e.description += page
-            await destination.send(embed=e)
+            embed = discord.Embed(title='Help', description='')
+            embed.description = '\n'.join(list(self.paginator.pages))
+            await destination.send(embed=embed)
     bot.help_command = helpcommand()
 
     #on boot
