@@ -118,7 +118,37 @@ class Bot_Admin(commands.Cog):
         help='Tips based on bot statistics on how to reach more people!'
     )
     async def botgrowth(self, ctx):
-        await ctx.send('Unfinished')
+        total_users = 0
+        for guild in self.bot.guilds:
+            total_users += guild.member_count
+        total_guilds = len(self.bot.guilds)
+        embed = discord.Embed()
+        embed.title = f'Tips'
+        embed.set_thumbnail(url=self.bot.user.avatar_url)
+        if total_guilds > 75:
+            if total_users/total_guilds > 150:
+                embed.description = '''
+                You have good server densities on this bot which means that it isn't worth trimming as there just isn't enough small servers to make a noticable difference.\n
+                - You can try to verify your bot with discord which means providing your ID to bypass the 100 server limit.
+                - Or you can add another bot to function as a clone of this bot through the launcher with the add command.
+                '''
+            else:
+                embed.description = '''
+                Your server density is still quite low on this bot which means trimming smaller servers can make space to reach more users
+                - You should try using the prune command to trim smaller servers. A size of 5-10 can help ensure that you have enough space in your server limits
+                - Alternatively you can verify your bot with discord which means providing your ID to bypass the 100 server limit.
+                '''
+        else:
+            embed.description = '''
+            Your bot is stil relatively small and has space to grow.
+            - You should try advertising your bot on bot finder pages like top.gg to get more attention.
+            - Also try inviting your friends to invite this bot to their servers as well!
+            The more popular your bot is, the more people that will use it!'''
+            if total_users/total_guilds < 50:
+                embed.description += '''\nAdditionally, your server density is still fairly low
+                - If the theme of the bot matches try asking owners of larger servers to invite your bot!'''
+        await ctx.send(embed=embed)
+
 
     @commands.is_owner()
     @commands.command(
