@@ -1,6 +1,5 @@
 import subprocess
 import os
-from discord import file
 import qrcode
 
 def install(library_name):
@@ -44,7 +43,7 @@ class Utility(commands.Cog):
 
     @commands.command(
         name='serverinfo',
-        help='Outputs known server information'
+        help='Known server information'
     )
     async def serverinfo(self, ctx):
         guild = ctx.guild
@@ -72,6 +71,31 @@ class Utility(commands.Cog):
         Explicit content filter enabled for {explicit}\n
         '''
         embed.set_thumbnail(url=guild.icon_url)
+        await ctx.send(embed=embed)
+
+    @commands.command(
+        name='botinfo',
+        help='Statistics about this bot'
+    )
+    async def botinfo(self, ctx):
+        bot = self.bot
+        name = bot.user.name
+        id = bot.user.id
+        guilds = bot.guilds
+        total_members = 0
+        for guild in guilds:
+            total_members += guild.member_count
+        average_members_per_guild = total_members / len(guilds)
+        embed = discord.Embed()
+        embed.title = f'Server Info'
+        embed.description = f'''
+        Name: {name}\n
+        ID: {id}\n
+        Servers: {len(guilds)}\n
+        Total Users: {total_members}\n
+        Average Users Per Server: {average_members_per_guild}\n
+        '''
+        embed.set_thumbnail(url=bot.user.avatar_url)
         await ctx.send(embed=embed)
 
 class Misc(commands.Cog):
