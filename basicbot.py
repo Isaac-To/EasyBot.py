@@ -18,10 +18,10 @@ async def cog(client):
         cog = cog.replace('.py', '')
         while True:
             try:
-                client.load_extension(f'cogs.{cog}')
                 try:
                     os.mkdir(f'./cogs/{cog}', mode = 0o666)
                 except: pass
+                client.load_extension(f'cogs.{cog}')
                 print(f'{cog} is loaded successfully')
                 break
             except discord.ext.commands.ExtensionAlreadyLoaded:
