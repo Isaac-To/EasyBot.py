@@ -114,6 +114,14 @@ class Bot_Admin(commands.Cog):
     
     @commands.is_owner()
     @commands.command(
+        name='botgrowth',
+        help='Tips based on bot statistics on how to reach more people!'
+    )
+    async def botgrowth(self, ctx):
+        await ctx.send('Unfinished')
+
+    @commands.is_owner()
+    @commands.command(
         name='prune',
         help='Removes bot from servers smaller than the specified limit'
     )
@@ -140,7 +148,7 @@ class Bot_Admin(commands.Cog):
                 await guild.leave()
         await ctx.send(f"Left {guilds_left} server(s)!")
 
-    @commands.isowner()
+    @commands.is_owner()
     @commands.command(
         name="broadcast",
         help="Sends a broadcast to all servers this bot is connected to; Only use this for serious messages!"
