@@ -139,7 +139,7 @@ class Bot_Admin(commands.Cog):
                         break
                     except: pass
                 guilds_left += 1
-                #await guild.leave()
+                await guild.leave()
         await ctx.send(f"Left {guilds_left} server(s)!")
 class Misc(commands.Cog):
     
