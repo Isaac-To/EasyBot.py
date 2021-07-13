@@ -110,7 +110,10 @@ if __name__ == '__main__':
     try:
         os.mkdir('./cogs')
     except: pass
-    subprocess.call(f'pip3 install discord', shell=False)
+    try:
+        import discord
+    except ModuleNotFoundError:
+        subprocess.call(f'pip3 install discord', shell=False)
     print('discord library has been installed')
     choices = {
     'add': 'Add bot(s)',
