@@ -62,7 +62,7 @@ def main(token, prefix):
         print(f'USN:{bot.user.name}\nUID:{bot.user.id}\nInvite: https://discord.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8 \n')
         presense =  f" your call using {prefix}"
         if prefix.endswith(' '):
-            presense = presense + f'; Note: there is a space following {prefix[:-1]}'
+            presense = presense[:-1] + f'; Note: there is a space following {prefix[:-1]}'
         await bot.change_presence(activity=discord.Activity (type=discord.ActivityType.listening, name=presense))
 
     #error response
