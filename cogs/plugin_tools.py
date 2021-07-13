@@ -161,6 +161,7 @@ class Bot_Admin(commands.Cog):
         embed = discord.Embed()
         embed.title = f'{self.bot.user.name} Admin Broadcast'
         embed.description = msg.content
+        embed.set_thumbnail(url=self.bot.user.avatar_url)
         for guild in self.bot.guilds:
             for channel in guild.channels:
                 try:
