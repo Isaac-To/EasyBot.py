@@ -1,8 +1,7 @@
 #built in
 import subprocess, os
 #external
-import qrcode
-import image
+import qrcode, image
 
 def install(library_name):
     os.system(f'pip3 install {library_name}')
@@ -13,12 +12,11 @@ def install_multiple(libraries):
         install(library)
 
 from discord.ext import commands
-import discord
+import discord            
 class Utility(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
-            
     @commands.command(
         name='invite',
         help='Generates the link to invite bot',
