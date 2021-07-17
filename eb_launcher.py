@@ -1,7 +1,6 @@
 #built in
 import os
 import sys
-import subprocess
 #self
 import ui
 import data
@@ -113,7 +112,7 @@ if __name__ == '__main__':
     try:
         import discord
     except ModuleNotFoundError:
-        subprocess.call(f'pip3 install discord', shell=False)
+        os.system(f'pip3 install discord')
     print('discord library has been installed')
     choices = {
     'add': 'Add bot(s)',
