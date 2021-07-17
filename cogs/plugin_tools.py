@@ -12,15 +12,6 @@ def install_multiple(libraries):
     for library in libraries:
         install(library)
 
-def is_op(uid):
-    print(f'If you triggered this command, copy {uid} to ops in the cog/plugin_tool/ folder and rerun again. Otherwise, just ignore this message')
-    op = open('./cogs/plugin_tool/ops', 'r')
-    ops = op.readlines()
-    if str(uid) in ops:
-        return True
-    else:
-        return False
-
 from discord.ext import commands
 import discord
 class Utility(commands.Cog):
