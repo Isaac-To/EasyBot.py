@@ -9,11 +9,10 @@ import ui
 async def cog(client):
 #cogs detection
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    cogs = [f for f in os.listdir('./cogs') if f.endswith('.py')]
+    cogs = [f[:-3] for f in os.listdir('./cogs') if f.endswith('.py')]
     if len(cogs) >= 5:
         print('This may take a while... please wait patiently')
     for cog in cogs:
-        cog = cog.replace('.py', '')
         while True:
             try:
                 try:

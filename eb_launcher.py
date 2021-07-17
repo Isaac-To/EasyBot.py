@@ -11,7 +11,7 @@ def offset(list):
 
 def inputs():
     while True:
-        nums = input('Select the bots you wish to select by listing the number corrosponding (e.g. 1 2 4): ').split(' ')
+        nums = better.input('Select the bots you wish to select by listing the number corrosponding (e.g. 1 2 4): ').split(' ')
         try:
             nums = sorted(list(map(int, nums)))
             break
@@ -19,23 +19,40 @@ def inputs():
             print(e)
     return nums
 
+class better:
+    input_called = -1
+    try:
+        input_commands = [c.replace('\n', '') for c in open(sys.argv[1], 'r').readlines()]
+    except:
+        input_commands = []
+    def input(*string):
+        if string:
+            print(string, end='')
+        better.input_called += 1
+        try:
+            print(better.input_commands[better.input_called], end='')
+            return better.input_commands[better.input_called]
+        except:
+            return input()
+
+
 def eula():
     if 'LICENSE' not in os.listdir(os.path.dirname(os.path.abspath(__file__))):
-        input('LICENSE does not exist; Please download it from https://github.com/chisaku-dev/EasyBot.py and try again')
+        better.input('LICENSE does not exist; Please download it from https://github.com/chisaku-dev/EasyBot.py and try again')
         quit()
     else:
-        input(f"{open('LICENSE', 'r').read()}\n [If you press ENTER, you agree to the LICENSE included]")
+        better.input(f"{open('LICENSE', 'r').read()}\n [If you press ENTER, you agree to the LICENSE included]")
 
 class commands:
     def help():
         ui.sys_message('Commands List')
         ui.list_dict(choices)
     def add():
-        tks = input('What is your bot token(s) (if multiple, seperate them with spaces)? Obtain it from https://discord.com/developers/ and paste it here: ').split(' ')
+        tks = better.input('What is your bot token(s) (if multiple, seperate them with spaces)? Obtain it from https://discord.com/developers/ and paste it here: ').split(' ')
         exist_tks = data.extract_tks()
         for tk in tks:
             if not tk in exist_tks:
-                data.save(tk, input(f'Prefix for {tk}: '))
+                data.save(tk, better.input(f'Prefix for {tk}: '))
             else:
                 print(tk, 'already exists in the database; Please remove the previous entry before trying to add this token again')
         ui.sys_message('Success')
@@ -66,8 +83,8 @@ class commands:
         else:
             ui.sys_message('There are no bots stored')
     def boott():
-        tk = input('What is the bot token?\n')
-        px = input('What is the desired bot prefix?\n')
+        tk = better.input('What is the bot token?\n')
+        px = better.input('What is the desired bot prefix?\n')
         bot = dict(token = tk, prefix = px)
         core.boot(bot)
     def restart():
@@ -97,8 +114,7 @@ class commands:
         quit()
 if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    if not 'agreetos' in sys.argv:
-        eula()
+    eula()
     try:
         os.mkdir('./data')
         open('./data/bots.easybot', 'w').close()
@@ -124,13 +140,10 @@ if __name__ == '__main__':
     i = 1
     ui.sys_message('EasyBot.py is running')
     commands.help()
+    ui.sys_message('Run your commands below')
     while True:
         try:
-            if i < len(sys.argv):
-                choice = sys.argv[i]
-                i += 1
-            else:
-                choice = input()
+            choice = better.input()
             if choice == 'help':
                 commands.help()
             if choice == 'add':
