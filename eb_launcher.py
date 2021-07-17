@@ -27,7 +27,7 @@ class better:
         input_commands = []
     def input(*string):
         if string:
-            print(string, end='')
+            print(string[0], end='')
         better.input_called += 1
         try:
             print(better.input_commands[better.input_called], end='')
