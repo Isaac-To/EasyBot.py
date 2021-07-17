@@ -13,6 +13,7 @@ async def cog(client):
     if len(cogs) >= 5:
         print('This may take a while... please wait patiently')
     for cog in cogs:
+        install = False
         while True:
             try:
                 try:
@@ -26,10 +27,11 @@ async def cog(client):
                 break
             except Exception as e:
                 e = str(e)
-                if 'ModuleNotFoundError' in e:
+                if 'ModuleNotFoundError' in e or install != True:
                     library_name = e[(72 + len(cog)):].replace("'", "")
                     os.system(f'pip3 install {library_name}')
-                    print(library_name, 'has been installed')
+                    print(library_name, 'has been attempted to be installed')
+                    install = True
                 else:
                     print(f'There was an error with {cog} with the error: {e}\n {cog} will be skipped')
                     break
