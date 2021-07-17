@@ -1,10 +1,7 @@
 #built in
-import os
-import sys
+import os, sys
 #self
-import ui
-import data
-import core
+import ui, data, core
 
 def offset(list):
     for i in range(0, len(list)):

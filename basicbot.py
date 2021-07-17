@@ -2,8 +2,7 @@
 import discord
 from discord.ext import commands
 #built in
-import os
-import time
+import os, time
 #self
 import ui
 

@@ -1,5 +1,6 @@
-import subprocess
-import os
+#built in
+import subprocess, os
+#external
 import qrcode
 import image
 

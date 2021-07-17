@@ -1,11 +1,12 @@
+#built in
 import multiprocessing
-import basicbot as db
-import ui
+#self
+import basicbot, ui
 
 processes = []
 
 def boot(bot):
-    processes.append((bot['token'], bot['prefix'], multiprocessing.Process(target=db.main, args=(bot['token'], bot['prefix']))))
+    processes.append((bot['token'], bot['prefix'], multiprocessing.Process(target=basicbot.main, args=(bot['token'], bot['prefix']))))
     processes[-1][2].start()
 
 def list_threads():
