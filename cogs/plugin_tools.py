@@ -5,7 +5,7 @@ import qrcode
 import image
 
 def install(library_name):
-    subprocess.call(f'pip3 install {library_name}', shell=False)
+    os.system(f'pip3 install {library_name}')
     print(f'Library {library_name} has been installed')
 
 def install_multiple(libraries):
