@@ -1,17 +1,17 @@
 #built in
-import json
+from json import loads, dumps
 def save(tk, px):
     #saves bot to file
     bot_save = open('./data/bots.easybot',"a")
     save_dict = dict(token=tk, prefix=px)
-    bot_save.write(f'{json.dumps(save_dict)}\n')
+    bot_save.write(f'{dumps(save_dict)}\n')
     bot_save.close()
 
 def extract():
     #extract token/prefix dicts
     bot_save = open('./data/bots.easybot', "r")
     bots = bot_save.readlines()
-    bots = [json.loads(s.replace('\n', '')) for s in bots]
+    bots = [loads(s.replace('\n', '')) for s in bots]
     bot_save.close()
     return bots
 

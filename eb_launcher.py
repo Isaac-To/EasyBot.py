@@ -1,5 +1,6 @@
 #built in
-import os, sys
+from sys import argv
+from os import listdir, path, chdir, mkdir, system
 #self
 import ui, data, core
 
@@ -22,7 +23,7 @@ def inputs():
 class better:
     input_called = -1
     try:
-        input_commands = [c.replace('\n', '') for c in open(sys.argv[1], 'r').readlines()]
+        input_commands = [c.replace('\n', '') for c in open(argv[1], 'r').readlines()]
     except:
         input_commands = []
     def input(*string):
@@ -37,7 +38,7 @@ class better:
 
 
 def eula():
-    if 'LICENSE' not in os.listdir(os.path.dirname(os.path.abspath(__file__))):
+    if 'LICENSE' not in listdir(path.dirname(path.abspath(__file__))):
         better.input('LICENSE does not exist; Please download it from https://github.com/chisaku-dev/EasyBot.py and try again')
         quit()
     else:
@@ -113,19 +114,20 @@ class commands:
                 core.stop(0)
         quit()
 if __name__ == '__main__':
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    chdir(path.dirname(path.abspath(__file__)))
     eula()
     try:
-        os.mkdir('./data')
+        mkdir('./data')
         open('./data/bots.easybot', 'w').close()
     except: pass
     try:
-        os.mkdir('./cogs')
+        mkdir('./cogs')
     except: pass
     try:
         import discord
+        del discord
     except ModuleNotFoundError:
-        os.system(f'pip3 install discord')
+        system(f'pip3 install discord')
     print('discord library has been installed')
     choices = {
     'add': 'Add bot(s)',
