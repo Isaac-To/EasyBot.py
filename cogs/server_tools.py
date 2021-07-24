@@ -1,5 +1,6 @@
 from discord.ext import commands
 import discord
+from cogs import plugin_tools
 
 class Utility(commands.Cog):
     def __init__(self, bot):
@@ -35,6 +36,15 @@ class Utility(commands.Cog):
         '''
         embed.set_thumbnail(url=guild.icon_url)
         await ctx.send(embed=embed)
+
+    @commands.command(
+        name='clear',
+        help='Clears number of messages specified from the channel in which the command was called'
+    )
+    async def clear(self, ctx, number_of_messages: int):
+        await ctx.channel.purge(limit=number_of_messages + 1)
+        deletemessage = await ctx.send(embed=plugin_tools.fast_embed(f'{number_of_messages} messages were deleted'), delete_after = 3)
+
 
 def setup(bot):
     bot.add_cog(Utility(bot))

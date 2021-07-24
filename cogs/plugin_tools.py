@@ -11,6 +11,10 @@ def install_multiple(libraries):
     for library in libraries:
         install(library)
 
+def fast_embed(content):
+    embed = discord.Embed(description = content)
+    return embed
+
 from discord.ext import commands
 import discord
 class Utility(commands.Cog):
