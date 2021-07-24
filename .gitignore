@@ -11,3 +11,5 @@ cogs/__pycache__/plugin_tools.cpython-39.pyc
 .vscode/settings.json
 cogs/__pycache__/reddit.cpython-39.pyc
 /.vs
+cogs/__pycache__/server_tools.cpython-39.pyc
+cogs/plugin_tools/invite.png

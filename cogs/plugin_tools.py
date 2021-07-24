@@ -23,10 +23,10 @@ class Utility(commands.Cog):
     )
     async def invite(self, ctx):
         link = f'https://discord.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=8'
-        if not os.path.isfile('./cogs/plugin_tool/invite.png'):
+        if not os.path.isfile('./cogs/plugin_tools/invite.png'):
             img = qrcode.make(link)
-            img.save('./cogs/plugin_tool/invite.png')
-        file = discord.File('./cogs/plugin_tool/invite.png')
+            img.save('./cogs/plugin_tools/invite.png')
+        file = discord.File('./cogs/plugin_tools/invite.png')
         embed = discord.Embed()
         embed.title = f'Invite {self.bot.user.name}'
         embed.description = link
@@ -169,10 +169,10 @@ class Misc(commands.Cog):
     )
     async def makeyourownbot(self, ctx):
         link = f'https://github.com/chisaku-dev/EasyBot.py'
-        if not os.path.isfile('./cogs/plugin_tool/makeyourownbot.png'):
+        if not os.path.isfile('./cogs/plugin_tools/makeyourownbot.png'):
             img = qrcode.make(link)
-            img.save('./cogs/plugin_tool/makeyourownbot.png')
-        file = discord.File('./cogs/plugin_tool/makeyourownbot.png')
+            img.save('./cogs/plugin_tools/makeyourownbot.png')
+        file = discord.File('./cogs/plugin_tools/makeyourownbot.png')
         embed = discord.Embed()
         embed.title = f'Make a bot like {self.bot.user.name}!'
         embed.description = link
