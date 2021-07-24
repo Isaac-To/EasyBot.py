@@ -21,7 +21,7 @@ class Utility(commands.Cog):
         epox = guild.created_at
         owner = guild.owner_id
         explicit = guild.explicit_content_filter
-        embed = discord.Embed()
+        embed = discord.Embed(color=plugin_tools.discord_colors())
         embed.title = f'Server Info'
         embed.description = f'''
         Name: {name}\n

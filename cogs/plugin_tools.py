@@ -3,6 +3,12 @@ import os
 #external
 import qrcode, image
 
+def discord_colors():
+    colors = [0x8B77BE, 0xA189E2, 0xCF91D1, 0x5665AA, 0xA3A3D2]
+    from random import choice
+    return choice(colors)
+
+
 def install(library_name):
     os.system(f'pip3 install {library_name}')
     print(f'Library {library_name} has been installed')
@@ -12,7 +18,7 @@ def install_multiple(libraries):
         install(library)
 
 def fast_embed(content):
-    embed = discord.Embed(description = content)
+    embed = discord.Embed(description = content, color = discord_colors())
     return embed
 
 from discord.ext import commands
@@ -31,7 +37,7 @@ class Utility(commands.Cog):
             img = qrcode.make(link)
             img.save('./cogs/plugin_tools/invite.png')
         file = discord.File('./cogs/plugin_tools/invite.png')
-        embed = discord.Embed()
+        embed = discord.Embed(color=discord_colors())
         embed.title = f'Invite {self.bot.user.name}'
         embed.description = link
         embed.set_thumbnail(url=self.bot.user.avatar_url)
@@ -43,7 +49,7 @@ class Utility(commands.Cog):
         help='Test the latency of the bot'
     )
     async def ping(self, ctx):
-        await ctx.send(f'Pong took {self.bot.latency} seconds 🏓')
+        await ctx.send(fast_embed(f'Pong took {self.bot.latency} seconds 🏓'))
 
     @commands.command(
         name='botinfo',
@@ -58,7 +64,7 @@ class Utility(commands.Cog):
         for guild in guilds:
             total_members += guild.member_count
         average_members_per_guild = total_members / len(guilds)
-        embed = discord.Embed()
+        embed = discord.Embed(color=discord_colors())
         embed.title = f'Bot Info'
         embed.description = f'''
         Name: {name}\n
@@ -84,7 +90,7 @@ class Bot_Admin(commands.Cog):
         for guild in self.bot.guilds:
             total_users += guild.member_count
         total_guilds = len(self.bot.guilds)
-        embed = discord.Embed()
+        embed = discord.Embed(color=discord_colors())
         embed.title = f'Tips'
         embed.set_thumbnail(url=self.bot.user.avatar_url)
         if total_guilds > 75:
@@ -119,7 +125,7 @@ class Bot_Admin(commands.Cog):
     )
     async def purge(self, ctx, minimum):
         guilds_left = 0
-        embed = discord.Embed()
+        embed = discord.Embed(color=discord_colors())
         embed.title = 'Notice of Leave'
         embed.description = f'''{self.bot.user.name} will be leaving your server due to a lack of users;
         This is done to ensure the bot can reach as many people as possible as discord limits the amount of servers one bot can be in to 100.
@@ -150,7 +156,7 @@ class Bot_Admin(commands.Cog):
             return ms.channel == ctx.message.channel and ms.author == ctx.message.author
         await ctx.send('Enter your message:')
         msg = await self.bot.wait_for('message', check=check)
-        embed = discord.Embed()
+        embed = discord.Embed(color=discord_colors())
         embed.title = f'{self.bot.user.name} Admin Broadcast'
         embed.description = msg.content
         embed.set_thumbnail(url=self.bot.user.avatar_url)
@@ -177,7 +183,7 @@ class Misc(commands.Cog):
             img = qrcode.make(link)
             img.save('./cogs/plugin_tools/makeyourownbot.png')
         file = discord.File('./cogs/plugin_tools/makeyourownbot.png')
-        embed = discord.Embed()
+        embed = discord.Embed(color=discord_colors())
         embed.title = f'Make a bot like {self.bot.user.name}!'
         embed.description = link
         embed.set_thumbnail(url=self.bot.user.avatar_url)

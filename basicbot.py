@@ -48,7 +48,7 @@ def main(token, prefix):
     class helpcommand(commands.MinimalHelpCommand):
         async def send_pages(self):
             destination = self.get_destination()
-            embed = Embed(title='Help', description='')
+            embed = Embed(title='Help', description='', color=0x8B77BE)
             embed.description = '\n'.join(list(self.paginator.pages))
             await destination.send(embed=embed)
     bot.help_command = helpcommand()
