@@ -1,32 +1,33 @@
-# Easy-Bot.py
-**Easy-Bot.py is a simple and no fuss discord bot starter kit** that you can set up **without** any code. Just drag and drop whatever you want and Easy-Bot.py will try it's best to run it! Easy-Bot's set up is simple with a basic ui that remembers the discord token and prefix so you don't have to!
-It supports **multiple** bots in one configuration. This way you can launch multiple bots with the exact same plugin set up so that you can get around the 100 servers limit.
+# Welcome to EasyBot.py
 
-## INSTALL STEPS
-Easy-Bot.py REQUIRES PYTHON 3.6+ to be installed (DEVELOPED ON PYTHON 3.9).
+## Ready to start running your own Discord Bot?
 
-The only library this uses is the Discord Library (Which will be automatically installed when eb_launcher.py is run)
-However, plugin requirements may vary and require external libraries to be installed but will be attempted to be automatically detected and installed.
+Do it Easy, Beautiful, Modular, and Fast with EasyBot.py
 
-## HOW TO USE
+### EasyBot.py is the easy to use framework for people to develop new commands and set up bots with speed
 
-### To start the bot
-Just execute eb_launcher.py; Launching methods vary depending on system. In most cases, this is in the form of "python3 eb_launcher.py".
-#### To start the bot in an isolated enviroment
-You can use the start.bat script included to run the Easy-Bot.py. This uses pipenv to isolate the libraries to the enviroment.
-### To install a plugin
-To install a plugin, simply drag the .py file into the cogs folder and the bot will attempt to run it on the next boot!
-By default, a plugin called plugintool is included which a couple basic commands such as invite. This is used to generate a link and qr to invite the bot to another server.
-Plugintools also includes functions that can be used by other plugins to simplify the creation of plugin creation.
-**"Official" plugins can be found by looking at my other repositories that are labeled "Easy-Bot".**
+EasyBot.py helps install all the dependancies that will be needed when you add a new plugin so that you will have a guranteed perfect first experience. This also makes it easier for bot developers when they want to develop on multiple machines as they wouldn't have to keep a requirements.txt file of all of the modules they used. EasyBot.py also has a commands programmer for first time bot makers so they can set up simple commands to interact with their patrons! While you're developing, just use the restart command to restart the bot without having to close the entire process!
 
-### To make your own plugin
-Check out example_plugin.pyexample. It includes the basic outline of how your should structure your plugin. This is based on discord.py's cog structure.
+### EasyBot.py is simple and beautiful
 
-### To remove a plugin
-Just drag/delete the plugin's .py file out of the cogs folder and it will not be loaded up upon the next boot!
+EasyBot.py strives to bring a beautiful experience to your users so that they will always get a great looking bot. We use embeds with fun colors on every output so it's always colorful and fun. EasyBot.py also features QR codes for inviting your bot to new servers.
 
-## Terms
-By using this program, you hereby agree to the terms of the license agreement included.
+### EasyBot.py helps your bot succeed
 
-Updated by chisaku-dev on 07/06/2021
+EasyBot.py contains commands built specifically for Bot Admins who do not wish to verify their IDs with Discord. EasyBot.py can use multiple tokens for the exact same experience across all of them so that there's always space for every server. You also get tips on how to grow your bot and tools to prune out smaller servers so that you have space for larger ones!
+
+### EasyBot.py is modular
+
+Want to add more features? Just drag and drop a discord.py cog file into the cogs folder! And if you don't like it? Delete the file and restart!
+
+### Did you need speed?
+
+EasyBot is designed to be LIGHTWEIGHT and runs on a mere 26mb (without external plugins) of ram! It also runs every bot token on a different process so that you can take advantage of multicored systems to keep things fast
+
+### There's nothing you need to know
+
+Just drag a plugin into cogs and run eb_launcher.py with a double click. Then just follow the instructions on the command line to start!
+
+## Ready to get started?
+
+Download the latest releast of EasyBot.py from [releases](https://github.com/chisaku-dev/EasyBot.py/releases/) and unzip!
