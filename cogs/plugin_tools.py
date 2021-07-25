@@ -8,7 +8,6 @@ def discord_colors():
     from random import choice
     return choice(colors)
 
-
 def install(library_name):
     os.system(f'pip3 install {library_name}')
     print(f'Library {library_name} has been installed')
