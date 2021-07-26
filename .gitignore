@@ -13,3 +13,7 @@ cogs/__pycache__/reddit.cpython-39.pyc
 /.vs
 cogs/__pycache__/server_tools.cpython-39.pyc
 cogs/plugin_tools/invite.png
+eb_files/__pycache__/basicbot.cpython-39.pyc
+eb_files/__pycache__/core.cpython-39.pyc
+eb_files/__pycache__/data.cpython-39.pyc
+eb_files/__pycache__/ui.cpython-39.pyc

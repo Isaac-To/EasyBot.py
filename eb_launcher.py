@@ -2,7 +2,7 @@
 from sys import argv
 from os import listdir, path, chdir, mkdir, system
 #self
-import ui, data, core
+from eb_files import ui, data, core
 
 def offset(list):
     for i in range(0, len(list)):
@@ -123,12 +123,6 @@ if __name__ == '__main__':
     try:
         mkdir('./cogs')
     except: pass
-    try:
-        import discord
-        del discord
-    except ModuleNotFoundError:
-        system(f'pip3 install discord')
-    print('discord library has been installed')
     choices = {
     'add': 'Add bot(s)',
     'rm': 'Remove bot(s)',

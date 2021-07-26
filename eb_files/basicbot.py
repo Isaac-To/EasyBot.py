@@ -5,7 +5,7 @@ from discord.ext import commands
 from time import strftime, localtime
 from os import chdir, path, listdir, mkdir, system
 #self
-import ui
+from eb_files import ui
 
 async def cog(client):
 #cogs detection

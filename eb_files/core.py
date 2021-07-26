@@ -1,7 +1,7 @@
 #built in
 from multiprocessing import Process
 #self
-import basicbot, ui
+from eb_files import basicbot, ui
 
 processes = []
 
