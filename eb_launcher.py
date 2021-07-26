@@ -1,6 +1,6 @@
 #built in
 from sys import argv
-from os import listdir, path, chdir, mkdir, system
+from os import listdir, path, chdir, mkdir
 #self
 from eb_files import ui, data, core
 
