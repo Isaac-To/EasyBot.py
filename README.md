@@ -1,5 +1,7 @@
 # Welcome to EasyBot.py
 
+![alt text](https://repository-images.githubusercontent.com/336690911/1d755480-dea9-11eb-99dc-e2320ce13405)
+
 ## Ready to start running your own Discord Bot?
 
 Do it Easy, Beautiful, Modular, and Fast with EasyBot.py
