@@ -32,7 +32,7 @@ Just drag a plugin into cogs and run eb_launcher.py with a double click. Then ju
 
 ## Ready to get started?
 
-1. Download the latest releast of EasyBot.py from [releases](https://github.com/chisaku-dev/EasyBot.py/releases/) and unzip!
+1. Download the latest release of EasyBot.py from [releases](https://github.com/chisaku-dev/EasyBot.py/releases/) and unzip!
 2. Open installers and choose the proper version for your installation and skip to step 4 or alternitively install the dependancies manually.
 3. Installing Dependancies
    1. Install Python 3
