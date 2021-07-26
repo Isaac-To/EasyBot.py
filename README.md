@@ -30,4 +30,36 @@ Just drag a plugin into cogs and run eb_launcher.py with a double click. Then ju
 
 ## Ready to get started?
 
-Download the latest releast of EasyBot.py from [releases](https://github.com/chisaku-dev/EasyBot.py/releases/) and unzip!
+1. Download the latest releast of EasyBot.py from [releases](https://github.com/chisaku-dev/EasyBot.py/releases/) and unzip!
+2. Open installers and choose the proper version for your installation and skip to step 4 or alternitively install the dependancies manually.
+3. Installing Dependancies
+   1. Install Python 3
+
+      - If using Windows go to [python.org](https://www.python.org/) and download the release that matches your OS
+
+      - If you're on Ubuntu, you can use:
+
+           ```sh
+           sudo apt install python3
+           ```
+
+   2. Install the [Discord Python Library](https://discordpy.readthedocs.io/en/stable/intro.html)
+
+       - If you're using Windows, use:
+
+           ```sh
+           pip install discord
+           ```
+
+       - If you're using Ubuntu, use:
+
+           ```sh
+           sudo apt install python3-pip
+           pip install discord
+           ```
+
+4. Go back to the main folder and run eb_launcher.py by using the command or double click on the file if you have a gui
+
+    ```sh
+    python3 eb_launcher.py
+    ```
