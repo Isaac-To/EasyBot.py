@@ -23,7 +23,7 @@ def inputs():
 class better:
     input_called = -1
     try:
-        input_commands = [c.replace('\n', '') for c in open(argv[1], 'r').readlines()]
+        input_commands = [c.replace('\n', '') for c in open(argv[1], 'r').readlines() if not c.startswith('#')]
     except:
         input_commands = []
     def input(*string):
