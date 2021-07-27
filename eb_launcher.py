@@ -36,7 +36,6 @@ class better:
         except:
             return input()
 
-
 def eula():
     if 'LICENSE' not in listdir(path.dirname(path.abspath(__file__))):
         better.input('LICENSE does not exist; Please download it from https://github.com/chisaku-dev/EasyBot.py and try again')
