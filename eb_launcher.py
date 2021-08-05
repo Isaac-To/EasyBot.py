@@ -35,14 +35,6 @@ class better:
             return better.input_commands[better.input_called]
         except:
             return input()
-
-def eula():
-    if 'LICENSE' not in listdir(path.dirname(path.abspath(__file__))):
-        better.input('LICENSE does not exist; Please download it from https://github.com/chisaku-dev/EasyBot.py and try again')
-        quit()
-    else:
-        better.input(f"{open('LICENSE', 'r').read()}\n [If you press ENTER, you agree to the LICENSE included]")
-
 class commands:
     def help():
         ui.sys_message('Commands List')
@@ -114,7 +106,6 @@ class commands:
         quit()
 if __name__ == '__main__':
     chdir(path.dirname(path.abspath(__file__)))
-    eula()
     try:
         mkdir('./data')
         open('./data/bots.easybot', 'w').close()
