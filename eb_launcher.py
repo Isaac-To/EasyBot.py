@@ -20,6 +20,11 @@ def inputs():
             print(e)
     return nums
 
+def new_console():
+    ui.clear()
+    commands.help()
+    ui.sys_message('Run your commands below')
+
 class better:
     input_called = -1
     try:
@@ -124,29 +129,34 @@ if __name__ == '__main__':
     'quit': 'Quit'
     }
     i = 1
+    new_console()
     ui.sys_message('EasyBot.py is running')
-    commands.help()
-    ui.sys_message('Run your commands below')
     while True:
         try:
             choice = better.input()
-            if choice == 'help':
-                commands.help()
             if choice == 'add':
+                new_console()
                 commands.add()
             elif choice == 'rm':
+                new_console()
                 commands.rm()
             elif choice == 'bootall':
+                new_console()
                 commands.boota()
             elif choice == 'bootspecific':
+                new_console()
                 commands.boots()
             elif choice == 'bootnotoken':
+                new_console()
                 commands.boott()
             elif choice == 'restart':
+                new_console()
                 commands.restart()
             elif choice == 'kill':
+                new_console()
                 commands.kill()
             elif choice == 'quit':
+                new_console()
                 commands.quit()
         except Exception as e:
             print(f'There has been an error: {e}')

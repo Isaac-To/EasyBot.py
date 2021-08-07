@@ -17,3 +17,7 @@ def sys_message(msg):
     for i in range(length_side):
         print('-', end='')
     print()
+
+def clear():
+    from os import system
+    system("cls")
