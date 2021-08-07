@@ -56,6 +56,9 @@ def main(token, prefix):
     #on boot
     @bot.event
     async def on_ready():
+        try:
+            mkdir(f'./data/logs', mode = 0o666)
+        except: pass
         ui.sys_message('Successfully booted')
         await cog(bot)
         print(f'USN:{bot.user.name}\nUID:{bot.user.id}\nInvite: https://com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8 \n')
@@ -73,7 +76,9 @@ def main(token, prefix):
     async def on_message(message):
         msg = str(message.content).lower()
         if msg.startswith(prefix) and message.author != bot.user:
-            print(strftime("%H:%M:%S", localtime()), bot.user.id, message.content)
+            log = open(f".././data/logs/{bot.user.id}", "a")
+            log.write(f"{strftime('%H:%M:%S', localtime())}| {message.content}\n")
+            log.close()
             message.content = str(message.content).lower()
             await bot.process_commands(message)
 
