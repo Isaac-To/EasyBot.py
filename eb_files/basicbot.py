@@ -61,7 +61,7 @@ def main(token, prefix):
         except: pass
         ui.sys_message('Booted')
         await cog(bot)
-        print(f'USN:{bot.user.name}\nUID:{bot.user.id}\nInvite: https://com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
+        print(f'USN:{bot.user.name}\nUID:{bot.user.id}\nInvite: https://discord.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
         ui.sys_message('Run your commands below')
         presense =  f" for {prefix}help"
         await bot.change_presence(activity=Activity (type=ActivityType.listening, name=presense))
