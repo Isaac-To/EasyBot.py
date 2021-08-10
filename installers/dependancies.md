@@ -4,6 +4,8 @@
 
 - pip
 - discord.py (pip install discord)
+- image
+- qrcode
 
 ## Reccomended installs
 
