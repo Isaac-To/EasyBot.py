@@ -63,8 +63,8 @@ def main(token, prefix):
         await cog(bot)
         print(f'USN:{bot.user.name}\nUID:{bot.user.id}\nInvite: https://discord.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
         ui.sys_message('Run your commands below')
-        presense =  f" for {prefix}help"
-        await bot.change_presence(activity=Activity (type=ActivityType.listening, name=presense))
+        presense =  f" {prefix}help"
+        await bot.change_presence(activity=Activity (type=ActivityType.watching, name=presense))
 
     #error response
     @bot.event
