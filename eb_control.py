@@ -79,6 +79,13 @@ class commands:
         px = better.input('What is the desired bot prefix?\n')
         bot = dict(token = tk, prefix = px)
         core.boot(bot)
+    def install():
+        from wget import download
+        while True:
+            link = input("Link: ")
+            if link.endswith('.py'):
+                download(f'{link}', f'{path.dirname(path.abspath(__file__))}/cogs')
+                break
     def running():
         ui.sys_message("Currently active")
         ui.num_list(core.processes)
@@ -122,6 +129,7 @@ if __name__ == '__main__':
     'bootall':'Boot all',
     'bootspecific': 'Boot specific',
     'bootnotoken': 'Boot w/o saving token',
+    'install': 'Installs cog from link',
     'kill': 'Stop Specific',
     'running': 'Shows running bots',
     'restart': 'Restart Specific',
@@ -145,6 +153,8 @@ if __name__ == '__main__':
                 commands.boots()
             elif choice == 'bootnotoken':
                 commands.boott()
+            elif choice == 'install':
+                commands.install()
             elif choice == 'running':
                 commands.running()
             elif choice == 'restart':
