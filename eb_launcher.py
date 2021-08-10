@@ -20,11 +20,6 @@ def inputs():
             print(e)
     return nums
 
-def new_console():
-    ui.clear()
-    commands.help()
-    ui.sys_message('Run your commands below')
-
 class better:
     input_called = -1
     try:
@@ -84,6 +79,9 @@ class commands:
         px = better.input('What is the desired bot prefix?\n')
         bot = dict(token = tk, prefix = px)
         core.boot(bot)
+    def running():
+        ui.sys_message("Currently active")
+        ui.num_list(core.processes)
     def restart():
         core.list_threads()
         if core.processes != []:
@@ -125,38 +123,37 @@ if __name__ == '__main__':
     'bootspecific': 'Boot specific',
     'bootnotoken': 'Boot w/o saving token',
     'kill': 'Stop Specific',
+    'running': 'Shows running bots',
     'restart': 'Restart Specific',
     'quit': 'Quit'
     }
     i = 1
-    new_console()
     ui.sys_message('EasyBot.py is running')
     while True:
         try:
+            commands.help()
+            ui.sys_message('Run your commands below')
             choice = better.input()
+            ui.clear()
             if choice == 'add':
-                new_console()
                 commands.add()
             elif choice == 'rm':
-                new_console()
                 commands.rm()
             elif choice == 'bootall':
-                new_console()
                 commands.boota()
             elif choice == 'bootspecific':
-                new_console()
                 commands.boots()
             elif choice == 'bootnotoken':
-                new_console()
                 commands.boott()
+            elif choice == 'running':
+                commands.running()
             elif choice == 'restart':
-                new_console()
                 commands.restart()
             elif choice == 'kill':
-                new_console()
                 commands.kill()
             elif choice == 'quit':
-                new_console()
                 commands.quit()
+            else:
+                print(f"{choice} is not a proper command")
         except Exception as e:
             print(f'There has been an error: {e}')
