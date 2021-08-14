@@ -28,7 +28,7 @@ async def cog(client):
                 break
             except Exception as e:
                 e = str(e)
-                if 'ModuleNotFoundError' in e or install != True:
+                if 'ModuleNotFoundError' in e and install == False:
                     library_name = e[(72 + len(cog)):].replace("'", "")
                     system(f'pip3 install {library_name}')
                     print(library_name, 'has been attempted to be installed')
