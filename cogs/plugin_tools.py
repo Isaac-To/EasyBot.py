@@ -178,7 +178,7 @@ class Misc(commands.Cog):
         help='Make your own discord bot with EasyBot framework by Chisaku-Dev'
     )
     async def makeyourownbot(self, ctx):
-        chdir(path.dirname(path.abspath(__file__)))
+        os.chdir(os.path.dirname(os.path.abspath(__file__)))
         link = f'https://github.com/chisaku-dev/EasyBot.py'
         if not os.path.isfile('./plugin_tools/makeyourownbot.png'):
             img = qrcode.make(link)
