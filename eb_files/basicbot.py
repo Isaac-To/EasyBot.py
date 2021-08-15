@@ -28,7 +28,7 @@ async def cog(client):
                 break
             except Exception as e:
                 e = str(e)
-                if 'ModuleNotFoundError' in e and install == False:
+                if 'ModuleNotFoundError' in e or install != True:
                     library_name = e[(72 + len(cog)):].replace("'", "")
                     system(f'pip3 install {library_name}')
                     print(library_name, 'has been attempted to be installed')
@@ -78,7 +78,7 @@ def main(token, prefix):
             log = open(f".././data/logs/{bot.user.id}", "a")
             log.write(f"{strftime('%H:%M:%S', localtime())}| {message.content}\n")
             log.close()
-            message.content = str(message.content).lower()
+            message.content = str(message.content[:len(prefix)]).lower() + str(message.content[len(prefix):])
             await bot.process_commands(message)
 
     #start bot
