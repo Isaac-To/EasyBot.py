@@ -141,15 +141,15 @@ if __name__ == '__main__':
             ui.sys_message('Run your commands below')
             choice = better.input()
             if choice == 'add':
-                commands.add(input('prefix: '), input('token: '))
+                commands.add(better.input('prefix: '), better.input('token: '))
             elif choice == 'delete':
                 commands.list_bots()
-                commands.delete(input('id: '))
+                commands.delete(better.input('id: '))
             elif choice == 'bootall':
                 commands.bootall()
             elif choice == 'boot':
                 commands.list_bots()
-                commands.boot(input('id: '))
+                commands.boot(better.input('id: '))
             elif choice == 'listbots':
                 commands.list_bots()
             elif choice == 'install':
