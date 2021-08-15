@@ -4,7 +4,7 @@ import wget
 #dependancies
 if platform == 'win32':
     system('python --version')
-system('pip install discord image qrcode')
+system('pip install discord image qrcode wget')
 BRANCH = 'testing'
 chdir(path.dirname(path.abspath(__file__)))
 #install eb
