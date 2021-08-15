@@ -1,8 +1,9 @@
 #built in
 from sys import argv
 from os import path, chdir, mkdir
+import sqlite3
 #self
-from eb_files import ui, data, core
+from eb_files import ui, core
 
 def offset(list):
     for i in range(0, len(list)):
@@ -39,46 +40,40 @@ class commands:
     def help():
         ui.sys_message('Commands List')
         ui.list_dict(choices)
-    def add():
-        tks = better.input('What is your bot token(s) (if multiple, seperate them with spaces)? Obtain it from https://discord.com/developers/ and paste it here: ').split(' ')
-        exist_tks = data.extract_tks()
-        for tk in tks:
-            if not tk in exist_tks:
-                data.save(tk, better.input(f'Prefix for {tk}: '))
-            else:
-                print(tk, 'already exists in the database; Please remove the previous entry before trying to add this token again')
-        ui.sys_message('Success')
-    def rm():
-        bot = data.extract()
-        ui.num_list(bot)
-        if bot != []:
-            bot_rm_nums = inputs()
-            for bot_rm_num in offset(bot_rm_nums):
-                data.remove(bot_rm_num)
-            ui.sys_message('Success')
-        else:
-            ui.sys_message('There are no bots stored')
-    def boota():
-        bots = data.extract()
-        if bots != []:
-            for bot in bots:
-                core.boot(bot)
-        else:
-            ui.sys_message('There are no bots stored')
-    def boots():
-        bots = data.extract()
-        ui.num_list(bots)
-        if bots != []:
-            bot_stp_nums = inputs()
-            for bot_st_num in bot_stp_nums:
-                core.boot(bots[bot_st_num])
-        else:
-            ui.sys_message('There are no bots stored')
-    def boott():
-        tk = better.input('What is the bot token?\n')
-        px = better.input('What is the desired bot prefix?\n')
-        bot = dict(token = tk, prefix = px)
-        core.boot(bot)
+    def add(prefix, token):
+        con = sqlite3.connect("./data/bots.easybot")
+        con.execute("INSERT INTO bots (prefix, token) VALUES (?, ?)", (prefix, token))
+        con.commit()
+        con.close()
+    def delete(id):
+        con = sqlite3.connect("./data/bots.easybot")
+        con.execute("DELETE FROM bots WHERE id = ?", id)
+        con.commit()
+        con.close()
+    def list_bots():
+        con = sqlite3.connect("./data/bots.easybot")
+        cur = con.cursor()
+        cur.execute("SELECT * FROM bots ORDER BY id")
+        output = cur.fetchall()
+        output = [f"{str(o)}\n" for o in output]
+        print(''.join(output))
+        cur.close()
+        con.close()
+    def boot(id):
+        con = sqlite3.connect("./data/bots.easybot")
+        cur = con.cursor()
+        cur.execute("SELECT * FROM bots WHERE id = ?", id)
+        toboot = cur.fetchone()
+        core.boot(toboot[1], toboot[2])
+        cur.close()
+        con.close()
+    def bootall():
+        con = sqlite3.connect("./data/bots.easybot")
+        cur = con.cursor()
+        cur.execute("SELECT * FROM bots")
+        for toboot in cur.fetchall():
+            core.boot(toboot[1], toboot[2])
+            cur.close()
     def install():
         from wget import download
         while True:
@@ -118,17 +113,20 @@ if __name__ == '__main__':
     chdir(path.dirname(path.abspath(__file__)))
     try:
         mkdir('./data')
-        open('./data/bots.easybot', 'w').close()
     except: pass
     try:
         mkdir('./cogs')
     except: pass
+    con = sqlite3.connect("./data/bots.easybot")
+    con.execute("CREATE TABLE IF NOT EXISTS bots (id INTEGER PRIMARY KEY AUTOINCREMENT, prefix STRING, token STRING)")
+    con.commit()
+    con.close()
     choices = {
     'add': 'Add bot(s)',
-    'rm': 'Remove bot(s)',
+    'delete': 'Remove bot token',
     'bootall':'Boot all',
-    'bootspecific': 'Boot specific',
-    'bootnotoken': 'Boot w/o saving token',
+    'boot': 'Boot specific',
+    'listbots': 'Shows all stored bots',
     'install': 'Installs cog from link',
     'kill': 'Stop Specific',
     'running': 'Shows running bots',
@@ -142,17 +140,18 @@ if __name__ == '__main__':
             commands.help()
             ui.sys_message('Run your commands below')
             choice = better.input()
-            ui.clear()
             if choice == 'add':
-                commands.add()
-            elif choice == 'rm':
-                commands.rm()
+                commands.add(input('prefix: '), input('token: '))
+            elif choice == 'delete':
+                commands.list_bots()
+                commands.delete(input('id: '))
             elif choice == 'bootall':
-                commands.boota()
-            elif choice == 'bootspecific':
-                commands.boots()
-            elif choice == 'bootnotoken':
-                commands.boott()
+                commands.bootall()
+            elif choice == 'boot':
+                commands.list_bots()
+                commands.boot(input('id: '))
+            elif choice == 'listbots':
+                commands.list_bots()
             elif choice == 'install':
                 commands.install()
             elif choice == 'running':

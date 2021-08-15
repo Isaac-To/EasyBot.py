@@ -5,8 +5,8 @@ from eb_files import basicbot, ui
 
 processes = []
 
-def boot(bot):
-    processes.append((bot['token'], bot['prefix'], Process(target=basicbot.main, args=(bot['token'], bot['prefix']))))
+def boot(prefix, token):
+    processes.append((token, prefix, Process(target=basicbot.main, args=(token, prefix))))
     processes[-1][2].start()
 
 def list_threads():
