@@ -3,7 +3,7 @@ from sys import argv
 from os import path, chdir, mkdir
 import sqlite3
 #self
-from eb_files import ui, core
+import ui, core
 
 def offset(list):
     for i in range(0, len(list)):
@@ -41,17 +41,17 @@ class commands:
         ui.sys_message('Commands List')
         ui.list_dict(choices)
     def add(prefix, token):
-        con = sqlite3.connect("./data/bots.easybot")
+        con = sqlite3.connect("./data/bots.db")
         con.execute("INSERT INTO bots (prefix, token) VALUES (?, ?)", (prefix, token))
         con.commit()
         con.close()
     def delete(id):
-        con = sqlite3.connect("./data/bots.easybot")
+        con = sqlite3.connect("./data/bots.db")
         con.execute("DELETE FROM bots WHERE id = ?", id)
         con.commit()
         con.close()
     def list_bots():
-        con = sqlite3.connect("./data/bots.easybot")
+        con = sqlite3.connect("./data/bots.db")
         cur = con.cursor()
         cur.execute("SELECT * FROM bots ORDER BY id")
         output = cur.fetchall()
@@ -60,7 +60,7 @@ class commands:
         cur.close()
         con.close()
     def boot(id):
-        con = sqlite3.connect("./data/bots.easybot")
+        con = sqlite3.connect("./data/bots.db")
         cur = con.cursor()
         cur.execute("SELECT * FROM bots WHERE id = ?", id)
         toboot = cur.fetchone()
@@ -68,7 +68,7 @@ class commands:
         cur.close()
         con.close()
     def bootall():
-        con = sqlite3.connect("./data/bots.easybot")
+        con = sqlite3.connect("./data/bots.db")
         cur = con.cursor()
         cur.execute("SELECT * FROM bots")
         for toboot in cur.fetchall():
@@ -91,7 +91,7 @@ class commands:
             for bot_stp_num in offset(bot_stp_nums):
                 bot = core.processes[bot_stp_num]
                 core.stop(bot_stp_num)
-                core.boot(dict(token = bot[0], prefix = bot[1]))
+                core.boot(bot[1], bot[0])
             ui.sys_message('Successfully restarted the bots')
         else:
             ui.sys_message('There are no bots running')
@@ -117,7 +117,7 @@ if __name__ == '__main__':
     try:
         mkdir('./cogs')
     except: pass
-    con = sqlite3.connect("./data/bots.easybot")
+    con = sqlite3.connect("./data/bots.db")
     con.execute("CREATE TABLE IF NOT EXISTS bots (id INTEGER PRIMARY KEY AUTOINCREMENT, prefix STRING, token STRING)")
     con.commit()
     con.close()

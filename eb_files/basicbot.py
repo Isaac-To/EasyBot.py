@@ -5,12 +5,12 @@ from discord.ext import commands
 from time import strftime, localtime
 from os import chdir, path, listdir, mkdir, system
 #self
-from eb_files import ui
+import ui
 
 async def cog(client):
 #cogs detection
     chdir(path.dirname(path.abspath(__file__)))
-    cogs = [f[:-3] for f in listdir('.././cogs') if f.endswith('.py')]
+    cogs = [f[:-3] for f in listdir('./cogs') if f.endswith('.py')]
     if len(cogs) >= 5:
         print('This may take a while... please wait patiently')
     for cog in cogs:
