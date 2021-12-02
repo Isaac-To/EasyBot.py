@@ -78,6 +78,7 @@ def main(token, prefix):
     async def on_message(message):
         msg = str(message.content).lower()
         if msg.startswith(prefix) and message.author != bot.user:
+            os.chdir(os.path.dirname(os.path.abspath(__file__)))
             log = open(f"./data/logs/{bot.user.id}", "a")
             log.write(f"{strftime('%H:%M:%S', localtime())}| {message.content}\n")
             log.close()
