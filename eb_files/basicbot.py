@@ -59,6 +59,9 @@ def main(token, prefix):
         try:
             mkdir(f'./data/logs', mode = 0o666)
         except: pass
+        #ensure file exists for log to be written to
+        f = open(f"./data/logs/{bot.user.id}", "w")
+        f.close()
         ui.sys_message('Booted')
         await cog(bot)
         print(f'USN:{bot.user.name}\nUID:{bot.user.id}\nInvite: https://discord.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
@@ -75,7 +78,7 @@ def main(token, prefix):
     async def on_message(message):
         msg = str(message.content).lower()
         if msg.startswith(prefix) and message.author != bot.user:
-            log = open(f".././data/logs/{bot.user.id}", "a")
+            log = open(f"./data/logs/{bot.user.id}", "a")
             log.write(f"{strftime('%H:%M:%S', localtime())}| {message.content}\n")
             log.close()
             message.content = str(message.content[:len(prefix)]).lower() + str(message.content[len(prefix):])

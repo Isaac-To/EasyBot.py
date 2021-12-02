@@ -3,6 +3,6 @@
 ## Python 3 (Install the latest version preferably)
 
 - pip
-- discord.py (pip install discord)
+- pycord (discord.py is no longer maintained)
 - image
 - qrcode
