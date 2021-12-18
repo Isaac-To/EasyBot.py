@@ -1,3 +1,5 @@
-pycord
-image
-qrcode
+py-cord[voice]>=1.7.3
+qrcode[pil]>=7.3.1
+SQLAlchemy>=1.4.28
+psycopg2>=2.9.2
+python-dotenv>=0.19.2

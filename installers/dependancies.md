@@ -4,5 +4,7 @@
 
 - pip
 - pycord (discord.py is no longer maintained)
-- image
 - qrcode
+- SQLAlchemy
+- psycopg2
+- python-dotenv
