@@ -17,7 +17,6 @@ class Utility(commands.Cog):
         members = guild.member_count
         premium_members = guild.premium_subscription_count
         max_members = guild.max_members
-        location = guild.region
         epox = guild.created_at
         owner = guild.owner_id
         explicit = guild.explicit_content_filter
@@ -29,7 +28,6 @@ class Utility(commands.Cog):
         # of channels: {len(channels)}\n
         # of nitro boosted members: {premium_members}\n
         # of members: {members}/{max_members}\n
-        Located in {location}\n
         Created on {epox}\n
         Owned by UID: {owner}\n
         Explicit content filter enabled for {explicit}\n

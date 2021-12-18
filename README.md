@@ -45,23 +45,32 @@ Just drag a plugin into cogs and run eb_launcher.py with a double click. Then ju
            sudo apt install python3
            ```
 
-   2. Install the [Discord Python Library](https://discordpy.readthedocs.io/en/stable/intro.html)
+   2. Install the dependencies
 
-       - If you're using Windows, use:
+        1. Enter the installers folder
 
-           ```sh
-           pip install discord
-           ```
+            ```sh
+            cd installers
+            ```
 
-       - If you're using Ubuntu, use:
+        2. Run the installer.sh
 
-           ```sh
-           sudo apt install python3-pip
-           pip install discord
-           ```
+            - If on windows rename the file to "installer.bat"
 
-4. Go back to the main folder and run eb_launcher.py by using the command or double click on the file if you have a gui
+            ```sh
+            sh installer.sh
+            ```
 
-    ```sh
-    python3 eb_launcher.py
-    ```
+4. Go to eb_files and run eb_control.py
+    1. Leave installers and enter eb_files
+
+        ```sh
+        cd ..
+        cd eb_files
+        ```
+
+    2. Run the bot process controller
+
+        ```sh
+        python3 eb_control.py
+        ```

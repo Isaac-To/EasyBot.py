@@ -17,8 +17,7 @@ def install_multiple(libraries):
         install(library)
 
 def fast_embed(content):
-    embed = discord.Embed(description = content, color = discord_colors())
-    return embed
+    return discord.Embed(description=content, color=discord_colors())
 
 from discord.ext import commands
 import discord
@@ -49,7 +48,7 @@ class Utility(commands.Cog):
         help='Test the latency of the bot'
     )
     async def ping(self, ctx):
-        await ctx.send(fast_embed(f'Pong took {self.bot.latency} seconds 🏓'))
+        await ctx.send(embed=fast_embed(f'Pong took {self.bot.latency} seconds 🏓'))
 
     @commands.command(
         name='botinfo',

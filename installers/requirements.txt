@@ -1,0 +1,3 @@
+pycord
+image
+qrcode
