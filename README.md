@@ -8,7 +8,7 @@ Do it Easy, Beautiful, Modular, and Fast with EasyBot.py
 
 ### EasyBot.py is the easy to use framework for people to develop new commands and set up bots with speed
 
-EasyBot.py helps install all the dependancies that will be needed when you add a new plugin so that you will have a guranteed perfect first experience. This also makes it easier for bot developers when they want to develop on multiple machines as they wouldn't have to keep a requirements.txt file of all of the modules they used. EasyBot.py also has a commands programmer for first time bot makers so they can set up simple commands to interact with their patrons! While you're developing, just use the restart command to restart the bot without having to close the entire process!
+EasyBot.py helps install all the dependencies that will be needed when you add a new plugin so that you will have a guranteed perfect first experience. This also makes it easier for bot developers when they want to develop on multiple machines as they wouldn't have to keep a requirements.txt file of all of the modules they used. EasyBot.py also has a commands programmer for first time bot makers so they can set up simple commands to interact with their patrons! While you're developing, just use the restart command to restart the bot without having to close the entire process!
 
 ### EasyBot.py is simple and beautiful
 
@@ -32,9 +32,9 @@ Just drag a plugin into cogs and run eb_launcher.py with a double click. Then ju
 
 ## Ready to get started?
 
-1. Download the latest release of EasyBot.py from [releases](https://github.com/chisaku-dev/EasyBot.py/releases/) and unzip!
-2. Open installers and choose the proper version for your installation and skip to step 4 or alternitively install the dependancies manually.
-3. Installing Dependancies
+1. Download the latest release of EasyBot.py from [releases](https://github.com/chisaku-dev/EasyBot.py/releases/) and unzip! Or if you wish, download this repo as a .zip or clone it.
+2. Open installers and choose the proper version for your installation and skip to step 4 or alternatively install the dependancies manually.
+3. Installing Dependencies
    1. Install Python 3
 
       - If using Windows go to [python.org](https://www.python.org/) and download the release that matches your OS
@@ -55,7 +55,7 @@ Just drag a plugin into cogs and run eb_launcher.py with a double click. Then ju
 
         2. Run the installer.sh
 
-            - If on windows rename the file to "installer.bat"
+            - If on Windows rename the file to "installer.bat"
 
             ```sh
             sh installer.sh
