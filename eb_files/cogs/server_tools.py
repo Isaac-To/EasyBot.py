@@ -1,16 +1,13 @@
-from discord.ext import commands
-import discord
+from disnake.ext import commands
+import disnake
 from cogs import plugin_tools
 
-class Utility(commands.Cog):
+class SUtility(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-    @commands.command(
-        name='serverinfo',
-        help='Known server information'
-    )
-    async def serverinfo(self, ctx):
-        guild = ctx.guild
+    @commands.slash_command(description="Provides information on the server")
+    async def serverinfo(self, inter):
+        guild = inter.guild
         name = guild.name
         id = guild.id
         channels = guild.channels
@@ -20,7 +17,7 @@ class Utility(commands.Cog):
         epox = guild.created_at
         owner = guild.owner_id
         explicit = guild.explicit_content_filter
-        embed = discord.Embed(color=plugin_tools.discord_colors())
+        embed = disnake.Embed(color=plugin_tools.discord_colors())
         embed.title = f'Server Info'
         embed.description = f'''
         Name: {name}\n
@@ -33,16 +30,13 @@ class Utility(commands.Cog):
         Explicit content filter enabled for {explicit}\n
         '''
         embed.set_thumbnail(url=guild.icon_url)
-        await ctx.send(embed=embed)
+        await inter.response.send_message(embed=embed)
 
-    @commands.command(
-        name='clear',
-        help='Clears number of messages specified from the channel in which the command was called'
-    )
-    async def clear(self, ctx, number_of_messages: int):
-        await ctx.channel.purge(limit=number_of_messages + 1)
-        deletemessage = await ctx.send(embed=plugin_tools.fast_embed(f'{number_of_messages} messages were deleted'), delete_after = 3)
+    @commands.slash_command(description="Deletes messages up to the number inputted")
+    async def clear(self, inter, number_of_messages: int):
+        await inter.channel.purge(limit=number_of_messages + 1)
+        deletemessage = await inter.response.send_message(embed=plugin_tools.fast_embed(f'{number_of_messages} messages were deleted'), delete_after = 3)
 
 
 def setup(bot):
-    bot.add_cog(Utility(bot))
+    bot.add_cog(SUtility(bot))

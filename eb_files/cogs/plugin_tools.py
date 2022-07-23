@@ -17,44 +17,35 @@ def install_multiple(libraries):
         install(library)
 
 def fast_embed(content):
-    return discord.Embed(description=content, color=discord_colors())
+    return disnake.Embed(description=content, color=discord_colors())
 
-from discord.ext import commands
-import discord
-class Utility(commands.Cog):
+from disnake.ext import commands
+import disnake
+class PUtility(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
-    @commands.command(
-        name='invite',
-        help='Generates the link to invite bot',
-    )
-    async def invite(self, ctx):
+    @commands.slash_command(description="Creates invite link for bot")
+    async def invite(self, inter):
         os.chdir(os.path.dirname(os.path.abspath(__file__)))
         link = f'https://discord.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=8'
         if not os.path.isfile('./plugin_tools/invite.png'):
             img = qrcode.make(link)
             img.save('./plugin_tools/invite.png')
-        file = discord.File('./plugin_tools/invite.png')
-        embed = discord.Embed(color=discord_colors())
+        file = disnake.File('./plugin_tools/invite.png')
+        embed = disnake.Embed(color=discord_colors())
         embed.title = f'Invite {self.bot.user.name}'
         embed.description = link
-        embed.set_thumbnail(url=self.bot.user.avatar_url)
+        embed.set_thumbnail(url=self.bot.user.avatar.url)
         embed.set_image(url='attachment://invite.png')
-        await ctx.send(embed=embed, file=file)
+        await inter.response.send_message(embed=embed, file=file)
 
-    @commands.command(
-        name='ping',
-        help='Test the latency of the bot'
-    )
-    async def ping(self, ctx):
-        await ctx.send(embed=fast_embed(f'Pong took {self.bot.latency} seconds 🏓'))
+    @commands.slash_command(description="Pings the bot")
+    async def ping(self, inter):
+        await inter.response.send_message(embed=fast_embed(f'Pong took {self.bot.latency} seconds 🏓'))
 
-    @commands.command(
-        name='botinfo',
-        help='Statistics about this bot'
-    )
-    async def botinfo(self, ctx):
+    @commands.slash_command(description="Provides information on the bot")
+    async def botinfo(self, inter):
         bot = self.bot
         name = bot.user.name
         id = bot.user.id
@@ -63,7 +54,7 @@ class Utility(commands.Cog):
         for guild in guilds:
             total_members += guild.member_count
         average_members_per_guild = total_members / len(guilds)
-        embed = discord.Embed(color=discord_colors())
+        embed = disnake.Embed(color=discord_colors())
         embed.title = f'Bot Info'
         embed.description = f'''
         Name: {name}\n
@@ -72,26 +63,22 @@ class Utility(commands.Cog):
         Total Users: {total_members}\n
         Average Users Per Server: {average_members_per_guild}\n
         '''
-        embed.set_thumbnail(url=bot.user.avatar_url)
-        await ctx.send(embed=embed)
+        embed.set_thumbnail(url=bot.user.avatar.url)
+        await inter.response.send_message(embed=embed)
 
 class Bot_Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.is_owner()
-    @commands.command(
-        name='botgrowth',
-        help='Tips based on bot statistics on how to reach more people!'
-    )
-    async def botgrowth(self, ctx):
+    @commands.slash_command(description="Provides information on how to improve your bot's reach")
+    async def botgrowth(self, inter):
         total_users = 0
         for guild in self.bot.guilds:
             total_users += guild.member_count
         total_guilds = len(self.bot.guilds)
-        embed = discord.Embed(color=discord_colors())
+        embed = disnake.Embed(color=discord_colors())
         embed.title = f'Tips'
-        embed.set_thumbnail(url=self.bot.user.avatar_url)
+        embed.set_thumbnail(url=self.bot.user.avatar.url)
         if total_guilds > 75:
             if total_users/total_guilds > 150:
                 embed.description = '''
@@ -114,17 +101,13 @@ class Bot_Admin(commands.Cog):
             if total_users/total_guilds < 50:
                 embed.description += '''\nAdditionally, your server density is still fairly low
                 - If the theme of the bot matches try asking owners of larger servers to invite your bot!'''
-        await ctx.send(embed=embed)
+        await inter.response.send_message(embed=embed)
 
 
-    @commands.is_owner()
-    @commands.command(
-        name='prune',
-        help='Removes bot from servers smaller than the specified limit'
-    )
-    async def purge(self, ctx, minimum):
+    @commands.slash_command(description="Removes small servers from the bot")
+    async def purge(self, inter, minimum):
         guilds_left = 0
-        embed = discord.Embed(color=discord_colors())
+        embed = disnake.Embed(color=discord_colors())
         embed.title = 'Notice of Leave'
         embed.description = f'''{self.bot.user.name} will be leaving your server due to a lack of users;
         This is done to ensure the bot can reach as many people as possible as discord limits the amount of servers one bot can be in to 100.
@@ -133,64 +116,58 @@ class Bot_Admin(commands.Cog):
         If you wish to invite me again, use https://discord.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=8\n\n\n
         \tMay we meet again soon,
         {self.bot.user.name}'''
-        embed.set_thumbnail(url=self.bot.user.avatar_url)
+        embed.set_thumbnail(url=self.bot.user.avatar.url)
         for guild in self.bot.guilds:
             if guild.member_count < int(minimum):
                 for channel in guild.channels:
                     try:
-                        await channel.send(embed=embed)
+                        await channel.response.send_message(embed=embed)
                         break
                     except: pass
                 guilds_left += 1
                 await guild.leave()
-        await ctx.send(f"Left {guilds_left} server(s)!")
+        await inter.response.send_message(f"Left {guilds_left} server(s)!")
 
     @commands.is_owner()
-    @commands.command(
-        name="broadcast",
-        help="Sends a broadcast to all servers this bot is connected to; Only use this for serious messages!"
-    )
-    async def broadcast(self, ctx):
+    @commands.slash_command(description="Sends message to every server this bot is in")
+    async def broadcast(self, inter):
         def check(ms):
-            return ms.channel == ctx.message.channel and ms.author == ctx.message.author
-        await ctx.send('Enter your message:')
+            return ms.channel == inter.message.channel and ms.author == inter.message.author
+        await inter.response.send_message('Enter your message:')
         msg = await self.bot.wait_for('message', check=check)
-        embed = discord.Embed(color=discord_colors())
+        embed = disnake.Embed(color=discord_colors())
         embed.title = f'{self.bot.user.name} Admin Broadcast'
         embed.description = msg.content
-        embed.set_thumbnail(url=self.bot.user.avatar_url)
+        embed.set_thumbnail(url=self.bot.user.avatar.url)
         for guild in self.bot.guilds:
             for channel in guild.channels:
                 try:
-                    await channel.send(embed=embed)
+                    await channel.response.send_message(embed=embed)
                     break
                 except: pass
-        await ctx.send(f"Message broadcasted to all servers connected")
+        await inter.response.send_message(f"Message broadcasted to all servers connected")
 
 class Misc(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
             
-    @commands.command(
-        name='makeyourownbot',
-        help='Make your own discord bot with EasyBot framework by Chisaku-Dev'
-    )
-    async def makeyourownbot(self, ctx):
+    @commands.slash_command(description="Provides information on how to make your own bot")
+    async def makeyourownbot(self, inter):
         os.chdir(os.path.dirname(os.path.abspath(__file__)))
         link = f'https://github.com/chisaku-dev/EasyBot.py'
         if not os.path.isfile('./plugin_tools/makeyourownbot.png'):
             img = qrcode.make(link)
             img.save('./plugin_tools/makeyourownbot.png')
-        file = discord.File('./plugin_tools/makeyourownbot.png')
-        embed = discord.Embed(color=discord_colors())
+        file = disnake.File('./plugin_tools/makeyourownbot.png')
+        embed = disnake.Embed(color=discord_colors())
         embed.title = f'Make a bot like {self.bot.user.name}!'
         embed.description = link
-        embed.set_thumbnail(url=self.bot.user.avatar_url)
+        embed.set_thumbnail(url=self.bot.user.avatar.url)
         embed.set_image(url='attachment://makeyourownbot.png')
-        await ctx.send(embed=embed, file=file)
+        await inter.response.send_message(embed=embed, file=file)
 
 def setup(bot):
-    bot.add_cog(Utility(bot))
+    bot.add_cog(PUtility(bot))
     bot.add_cog(Misc(bot))
     bot.add_cog(Bot_Admin(bot))

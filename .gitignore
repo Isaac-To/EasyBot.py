@@ -50,3 +50,4 @@ eb_files/data/logs/617550552074551327
 eb_files/cogs/plugin_tools/makeyourownbot.png
 .dccache
 .idea
+Pipfile.lock

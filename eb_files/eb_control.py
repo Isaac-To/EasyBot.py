@@ -1,9 +1,9 @@
 #built in
 from sys import argv
 from os import path, chdir, mkdir
+import sqlite3
 #self
 import ui, core
-from sqlalchemy import Column, MetaData, String, Table, create_engine, Integer, insert, select
 
 def offset(list):
     for i in range(0, len(list)):
@@ -41,52 +41,39 @@ class commands:
         ui.sys_message('Commands List')
         ui.list_dict(choices)
     def add(prefix, token):
-        meta = MetaData()
-        engine = create_engine('sqlite:///data/bots.db')
-        conn = engine.connect()
-        ins = insert(Column('prefix', String), Column('token', String)).values(prefix=prefix, token=token)
-        conn.execute(ins)
-        conn.close()
+        con = sqlite3.connect("./data/bots.db")
+        con.execute("INSERT INTO bots (prefix, token) VALUES (?, ?)", (prefix, token))
+        con.commit()
+        con.close()
     def delete(id):
-        meta = MetaData()
-        engine = create_engine('sqlite:///data/bots.db')
-        bots = Table('bots', meta, Column('id', Integer, primary_key=True, autoincrement=True), Column('prefix', String), Column('token', String))
-        delete = bots.delete().where(bots.c.id == id)
-        conn = engine.connect()
-        conn.execute(delete)
-        conn.close()
+        con = sqlite3.connect("./data/bots.db")
+        con.execute("DELETE FROM bots WHERE id = ?", id)
+        con.commit()
+        con.close()
     def list_bots():
-        meta = MetaData()
-        engine = create_engine('sqlite:///data/bots.db')
-        bots = Table('bots', meta, Column('id', Integer, primary_key=True, autoincrement=True), Column('prefix', String), Column('token', String))
-        sel = bots.select().order_by(bots.c.id)
-        conn = engine.connect()
-        conn.execute(sel)
-        output = conn.fetchall()
+        con = sqlite3.connect("./data/bots.db")
+        cur = con.cursor()
+        cur.execute("SELECT * FROM bots ORDER BY id")
+        output = cur.fetchall()
         output = [f"{str(o)}\n" for o in output]
         print(''.join(output))
-        conn.close()
+        cur.close()
+        con.close()
     def boot(id):
-        meta = MetaData()
-        engine = create_engine('sqlite:///data/bots.db')
-        bots = Table('bots', meta, Column('id', Integer, primary_key=True, autoincrement=True), Column('prefix', String), Column('token', String))
-        sel = bots.select().where(bots.c.id == id)
-        conn = engine.connect()
-        conn.execute(sel)
-        toboot = conn.fetchone()
+        con = sqlite3.connect("./data/bots.db")
+        cur = con.cursor()
+        cur.execute("SELECT * FROM bots WHERE id = ?", id)
+        toboot = cur.fetchone()
         core.boot(toboot[1], toboot[2])
-        conn.close()
+        cur.close()
+        con.close()
     def bootall():
-        meta = MetaData()
-        engine = create_engine('sqlite:///data/bots.db')
-        bots = Table('bots', meta, Column('id', Integer, primary_key=True, autoincrement=True), Column('prefix', String), Column('token', String))
-        sel = bots.select()
-        conn = engine.connect()
-        conn.execute(sel)
-        results = conn.fetchall()
-        for toboot in results:
+        con = sqlite3.connect("./data/bots.db")
+        cur = con.cursor()
+        cur.execute("SELECT * FROM bots")
+        for toboot in cur.fetchall():
             core.boot(toboot[1], toboot[2])
-        conn.close()
+            cur.close()
     def install():
         from wget import download
         while True:
@@ -130,10 +117,10 @@ if __name__ == '__main__':
     try:
         mkdir('./cogs')
     except: pass
-    meta = MetaData()
-    engine = create_engine("sqlite:///data/bots.db")
-    bots = Table('bots', meta, Column('id', Integer, primary_key=True, autoincrement=True), Column('prefix', String), Column('token', String))
-    meta.create_all(engine)
+    con = sqlite3.connect("./data/bots.db")
+    con.execute("CREATE TABLE IF NOT EXISTS bots (id INTEGER PRIMARY KEY AUTOINCREMENT, prefix STRING, token STRING)")
+    con.commit()
+    con.close()
     choices = {
     'add': 'Add bot(s)',
     'delete': 'Remove bot token',

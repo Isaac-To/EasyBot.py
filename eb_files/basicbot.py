@@ -1,6 +1,6 @@
 #discord
-from discord import Embed, Activity, ActivityType
-from discord.ext import commands
+from disnake import Embed, Activity, ActivityType
+from disnake.ext import commands
 #built in
 from time import strftime, localtime
 from os import chdir, path, listdir, mkdir, system
@@ -71,8 +71,8 @@ def main(token, prefix):
 
     #error response
     @bot.event
-    async def on_command_error(ctx, error):
-        await ctx.send(error)
+    async def on_command_error(inter, error):
+        await inter.response.send_message(error)
     
     @bot.event
     async def on_message(message):
