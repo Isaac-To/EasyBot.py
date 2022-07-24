@@ -1,6 +1,6 @@
 from disnake.ext import commands
 import disnake
-from cogs import plugin_tools
+from cogs.universal import plugin_tools
 
 class SUtility(commands.Cog):
     def __init__(self, bot):

@@ -1,7 +1,5 @@
 #built in
 import os
-#external
-import qrcode
 
 def discord_colors():
     colors = [0x8B77BE, 0xA189E2, 0xCF91D1, 0x5665AA, 0xA3A3D2]
@@ -27,18 +25,11 @@ class PUtility(commands.Cog):
         self.bot = bot
     @commands.slash_command(description="Creates invite link for bot")
     async def invite(self, inter):
-        os.chdir(os.path.dirname(os.path.abspath(__file__)))
-        link = f'https://discord.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=8'
-        if not os.path.isfile('./plugin_tools/invite.png'):
-            img = qrcode.make(link)
-            img.save('./plugin_tools/invite.png')
-        file = disnake.File('./plugin_tools/invite.png')
         embed = disnake.Embed(color=discord_colors())
         embed.title = f'Invite {self.bot.user.name}'
-        embed.description = link
+        embed.description = f'https://discord.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=8'
         embed.set_thumbnail(url=self.bot.user.avatar.url)
-        embed.set_image(url='attachment://invite.png')
-        await inter.response.send_message(embed=embed, file=file)
+        await inter.response.send_message(embed=embed)
 
     @commands.slash_command(description="Pings the bot")
     async def ping(self, inter):
@@ -147,27 +138,6 @@ class Bot_Admin(commands.Cog):
                 except: pass
         await inter.response.send_message(f"Message broadcasted to all servers connected")
 
-class Misc(commands.Cog):
-    
-    def __init__(self, bot):
-        self.bot = bot
-            
-    @commands.slash_command(description="Provides information on how to make your own bot")
-    async def makeyourownbot(self, inter):
-        os.chdir(os.path.dirname(os.path.abspath(__file__)))
-        link = f'https://github.com/chisaku-dev/EasyBot.py'
-        if not os.path.isfile('./plugin_tools/makeyourownbot.png'):
-            img = qrcode.make(link)
-            img.save('./plugin_tools/makeyourownbot.png')
-        file = disnake.File('./plugin_tools/makeyourownbot.png')
-        embed = disnake.Embed(color=discord_colors())
-        embed.title = f'Make a bot like {self.bot.user.name}!'
-        embed.description = link
-        embed.set_thumbnail(url=self.bot.user.avatar.url)
-        embed.set_image(url='attachment://makeyourownbot.png')
-        await inter.response.send_message(embed=embed, file=file)
-
 def setup(bot):
     bot.add_cog(PUtility(bot))
-    bot.add_cog(Misc(bot))
     bot.add_cog(Bot_Admin(bot))

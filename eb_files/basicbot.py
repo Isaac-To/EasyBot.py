@@ -10,32 +10,24 @@ import ui
 async def cog(client):
 #cogs detection
     chdir(path.dirname(path.abspath(__file__)))
-    cogs = [f[:-3] for f in listdir('./cogs') if f.endswith('.py')]
+    try:
+        mkdir(f'./cogs/{client.user.id}')
+    except: pass
+    cogs = [f[:-3] for f in listdir(f'./cogs/{client.user.id}') if f.endswith('.py')]
+    universal_cogs = [f[:-3] for f in listdir('./cogs/universal') if f.endswith('.py')]
     if len(cogs) >= 5:
         print('This may take a while... please wait patiently')
     for cog in cogs:
-        install = False
-        while True:
-            try:
-                try:
-                    mkdir(f'./cogs/{cog}', mode = 0o666)
-                except: pass
-                client.load_extension(f'cogs.{cog}')
-                print(f'{cog} is loaded successfully')
-                break
-            except commands.ExtensionAlreadyLoaded:
-                print(f'{cog} is already loaded; There may be a duplicate file or another version present')
-                break
-            except Exception as e:
-                e = str(e)
-                if 'ModuleNotFoundError' in e or install != True:
-                    library_name = e[(72 + len(cog)):].replace("'", "")
-                    system(f'pip3 install {library_name}')
-                    print(library_name, 'has been attempted to be installed')
-                    install = True
-                else:
-                    print(f'There was an error with {cog} with the error: {e}\n {cog} will be skipped')
-                    break
+        await load_cog(client, f'cogs.{client.user.id}.{cog}')
+    for cog in universal_cogs:
+        await load_cog(client, f'cogs.universal.{cog}')
+
+async def load_cog(client, path):
+    try:
+        client.load_extension(path)
+        print(f'{path} is loaded successfully')
+    except commands.ExtensionAlreadyLoaded:
+        print(f'{path} is already loaded; There may be a duplicate file or another version present')
 
 #bot main
 def main(token, prefix):
