@@ -1,9 +1,9 @@
 #built in
 from sys import argv
 from os import path, chdir, mkdir
-import sqlite3
+import sqlite3, logging, time
 #self
-import ui, core
+import core
 
 def offset(list):
     for i in range(0, len(list)):
@@ -18,7 +18,7 @@ def inputs():
             nums = sorted(list(map(int, nums)))
             break
         except ValueError as e:
-            print(e)
+            logging.error(e)
     return nums
 
 class better:
@@ -38,8 +38,7 @@ class better:
             return input()
 class commands:
     def help():
-        ui.sys_message('Commands List')
-        ui.list_dict(choices)
+        print(f'Commands List: {choices}')
     def add(prefix, token):
         con = sqlite3.connect("./data/bots.db")
         con.execute("INSERT INTO bots (prefix, token) VALUES (?, ?)", (prefix, token))
@@ -82,8 +81,7 @@ class commands:
                 download(f'{link}', f'{path.dirname(path.abspath(__file__))}/cogs')
                 break
     def running():
-        ui.sys_message("Currently active")
-        ui.num_list(core.processes)
+        print(f"Currently active: {core.processes}")
     def restart():
         core.list_threads()
         if core.processes != []:
@@ -92,18 +90,18 @@ class commands:
                 bot = core.processes[bot_stp_num]
                 core.stop(bot_stp_num)
                 core.boot(bot[1], bot[0])
-            ui.sys_message('Successfully restarted the bots')
+            print('Successfully restarted the bots')
         else:
-            ui.sys_message('There are no bots running')
+            logging.warning('There are no bots running')
     def kill():
         core.list_threads()
         if core.processes != []:
             bot_stp_nums = inputs()
             for bot_stp_num in offset(bot_stp_nums):
                 core.stop(bot_stp_num)
-            ui.sys_message('Successfully stopped the bots')
+            print('Successfully stopped the bots')
         else:
-            ui.sys_message('There are no bots running')
+            logging.warning('There are no bots running')
     def quit():
         if core.processes != []:
             for bots in range(0, len(core.processes)):
@@ -111,6 +109,11 @@ class commands:
         quit()
 if __name__ == '__main__':
     chdir(path.dirname(path.abspath(__file__)))
+    # set up logging
+    try:
+        mkdir('logs')
+    except: pass
+    logging.basicConfig(filename=f'./logs/{time.strftime("%Y%m%d%H%M")}.log', encoding='utf-8', level=logging.DEBUG)
     try:
         mkdir('./data')
     except: pass
@@ -134,11 +137,11 @@ if __name__ == '__main__':
     'quit': 'Quit'
     }
     i = 1
-    ui.sys_message('EasyBot.py is running')
+    print('EasyBot.py is running')
     while True:
         try:
             commands.help()
-            ui.sys_message('Run your commands below')
+            print('Run your commands below')
             choice = better.input()
             if choice == 'add':
                 commands.add(better.input('prefix: '), better.input('token: '))
@@ -163,6 +166,6 @@ if __name__ == '__main__':
             elif choice == 'quit':
                 commands.quit()
             else:
-                print(f"{choice} is not a proper command")
+                logging.warning(f"{choice} is not a proper command")
         except Exception as e:
-            print(f'There has been an error: {e}')
+            logging.error(f'There has been an error: {e}')

@@ -1,15 +1,13 @@
-#discord
-from disnake import Embed, Activity, ActivityType
-from disnake.ext import commands
 #built in
 from time import strftime, localtime
 from os import chdir, path, listdir, mkdir, system
-#self
-import ui
+import logging
+#discord
+from disnake import Embed, Activity, ActivityType
+from disnake.ext import commands
 
 async def cog(client):
 #cogs detection
-    chdir(path.dirname(path.abspath(__file__)))
     try:
         mkdir(f'./cogs/{client.user.id}')
     except: pass
@@ -25,9 +23,11 @@ async def cog(client):
 async def load_cog(client, path):
     try:
         client.load_extension(path)
-        print(f'{path} is loaded successfully')
+        logging.info(f'{path} is loaded successfully')
     except commands.ExtensionAlreadyLoaded:
-        print(f'{path} is already loaded; There may be a duplicate file or another version present')
+        logging.error(f'{path} is already loaded; There may be a duplicate file or another version present')
+    except Exception as e:
+        logging.error(e)
 
 #bot main
 def main(token, prefix):
@@ -54,10 +54,10 @@ def main(token, prefix):
         #ensure file exists for log to be written to
         f = open(f"./data/logs/{bot.user.id}", "w")
         f.close()
-        ui.sys_message('Booted')
+        logging.info(f'Booted {bot.user.id}')
         await cog(bot)
         print(f'USN:{bot.user.name}\nUID:{bot.user.id}\nInvite: https://discord.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
-        ui.sys_message('Run your commands below')
+        logging.info(f'USN:{bot.user.name}\nUID:{bot.user.id}\nInvite: https://discord.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
         presense =  f" {prefix}help"
         await bot.change_presence(activity=Activity (type=ActivityType.watching, name=presense))
 
@@ -65,22 +65,13 @@ def main(token, prefix):
     @bot.event
     async def on_command_error(inter, error):
         await inter.response.send_message(error)
-    
-    @bot.event
-    async def on_message(message):
-        msg = str(message.content).lower()
-        if msg.startswith(prefix) and message.author != bot.user:
-            chdir(path.dirname(path.abspath(__file__)))
-            log = open(f"./data/logs/{bot.user.id}", "a")
-            log.write(f"{strftime('%H:%M:%S', localtime())}| {message.content}\n")
-            log.close()
-            message.content = str(message.content[:len(prefix)]).lower() + str(message.content[len(prefix):])
-            await bot.process_commands(message)
 
     #start bot
     try:
+        chdir(path.dirname(path.abspath(__file__)))
+        logging.basicConfig(filename=f'./logs/{strftime("%Y%m%d%H%M")}.log', encoding='utf-8', level=logging.DEBUG)
         bot.run(token)
     except Exception as e:
         #will state when an invalid token has been used
-        ui.sys_message(e)
+        logging.error(e)
         return

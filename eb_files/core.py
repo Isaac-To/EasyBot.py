@@ -1,7 +1,7 @@
 #built in
 from multiprocessing import Process
 #self
-import basicbot, ui
+import basicbot
 
 processes = []
 
@@ -10,7 +10,7 @@ def boot(prefix, token):
     processes[-1][2].start()
 
 def list_threads():
-    ui.num_list(processes)
+    print(processes)
 
 def stop(bot_num):
     processes[bot_num][2].terminate()
