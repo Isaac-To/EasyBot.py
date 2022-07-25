@@ -5,13 +5,13 @@ import basicbot
 
 processes = []
 
-def boot(prefix, token):
-    processes.append((token, prefix, Process(target=basicbot.main, args=(token, prefix))))
-    processes[-1][2].start()
+def boot(token):
+    processes.append((token, Process(target=basicbot.main, args=(token))))
+    processes[-1][1].start()
 
 def list_threads():
     print(processes)
 
 def stop(bot_num):
-    processes[bot_num][2].terminate()
+    processes[bot_num][1].terminate()
     processes.remove(processes[bot_num])

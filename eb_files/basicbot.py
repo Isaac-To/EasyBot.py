@@ -30,11 +30,11 @@ async def load_cog(client, path):
         logging.error(e)
 
 #bot main
-def main(token, prefix):
+def main(token):
     def __init__(self, client):
         self.client = client
     
-    bot = commands.Bot(command_prefix=prefix)
+    bot = commands.Bot()
 
     #embed help command
     class helpcommand(commands.MinimalHelpCommand):
@@ -48,18 +48,10 @@ def main(token, prefix):
     #on boot
     @bot.event
     async def on_ready():
-        try:
-            mkdir(f'./data/logs', mode = 0o666)
-        except: pass
-        #ensure file exists for log to be written to
-        f = open(f"./data/logs/{bot.user.id}", "w")
-        f.close()
         logging.info(f'Booted {bot.user.id}')
         await cog(bot)
         print(f'USN:{bot.user.name}\nUID:{bot.user.id}\nInvite: https://discord.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
         logging.info(f'USN:{bot.user.name}\nUID:{bot.user.id}\nInvite: https://discord.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
-        presense =  f" {prefix}help"
-        await bot.change_presence(activity=Activity (type=ActivityType.watching, name=presense))
 
     #error response
     @bot.event
