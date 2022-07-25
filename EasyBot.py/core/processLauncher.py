@@ -1,12 +1,12 @@
 #built in
 from multiprocessing import Process
 #self
-import basicbot
+import core.basicbot as bb
 
 processes = []
 
 def boot(token):
-    processes.append((token, Process(target=basicbot.main, args=(token))))
+    processes.append((token, Process(target=bb.main, args=(token))))
     processes[-1][1].start()
 
 def list_threads():

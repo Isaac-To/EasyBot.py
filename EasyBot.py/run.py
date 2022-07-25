@@ -3,7 +3,7 @@ import logging
 import os
 import sqlite3
 # self
-import core
+import core.processLauncher as pL
 
 if __name__ == '__main__':
     os.chdir(os.path.dirname(__file__))
@@ -12,4 +12,4 @@ if __name__ == '__main__':
     curr.execute('SELECT * FROM bot')
     tokens = curr.fetchall()
     for token in tokens:
-        core.boot(token)
+        pL.boot(token)

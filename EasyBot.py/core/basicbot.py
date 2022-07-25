@@ -61,7 +61,7 @@ def main(token):
     #start bot
     try:
         chdir(path.dirname(path.abspath(__file__)))
-        logging.basicConfig(filename=f'./logs/{strftime("%Y%m%d%H%M")}.log', encoding='utf-8', level=logging.DEBUG)
+        logging.basicConfig(filename=f'../logs/{strftime("%Y%m%d%H%M")}.log', encoding='utf-8', level=logging.DEBUG)
         bot.run(token)
     except Exception as e:
         #will state when an invalid token has been used
