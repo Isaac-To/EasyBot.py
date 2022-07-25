@@ -29,9 +29,8 @@ class SUtility(commands.Cog):
         Owned by UID: {owner}\n
         Explicit content filter enabled for {explicit}\n
         '''
-        try:
+        if guild.icon != None:
             embed.set_thumbnail(url=guild.icon)
-        except: pass
         await inter.response.send_message(embed=embed)
 
     @commands.slash_command(description="Deletes messages up to the number inputted")
