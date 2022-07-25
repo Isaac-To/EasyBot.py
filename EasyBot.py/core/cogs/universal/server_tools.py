@@ -30,7 +30,7 @@ class SUtility(commands.Cog):
         Explicit content filter enabled for {explicit}\n
         '''
         try:
-            embed.set_thumbnail(url=guild.icon_url)
+            embed.set_thumbnail(url=guild.icon)
         except: pass
         await inter.response.send_message(embed=embed)
 
