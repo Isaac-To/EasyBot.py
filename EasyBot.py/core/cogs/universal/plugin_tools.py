@@ -29,7 +29,7 @@ class PUtility(commands.Cog):
         embed.title = f'Invite {self.bot.user.name}'
         embed.description = f'https://discord.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=8'
         try:
-            embed.set_thumbnail(url=self.bot.user.avatar.url)
+            embed.set_thumbnail(url=self.bot.user.avatar)
         except: pass
         await inter.response.send_message(embed=embed)
 
@@ -56,7 +56,7 @@ class PUtility(commands.Cog):
         Total Users: {total_members}\n
         Average Users Per Server: {average_members_per_guild}\n
         '''
-        embed.set_thumbnail(url=bot.user.avatar.url)
+        embed.set_thumbnail(url=bot.user.avatar)
         await inter.response.send_message(embed=embed)
 
 class Bot_Admin(commands.Cog):
@@ -72,7 +72,7 @@ class Bot_Admin(commands.Cog):
         embed = disnake.Embed(color=discord_colors())
         embed.title = f'Tips'
         try:
-            embed.set_thumbnail(url=self.bot.user.avatar.url)
+            embed.set_thumbnail(url=self.bot.user.avatar)
         except: pass
         if total_guilds > 75:
             if total_users/total_guilds > 150:
@@ -112,7 +112,7 @@ class Bot_Admin(commands.Cog):
         \tMay we meet again soon,
         {self.bot.user.name}'''
         try:
-            embed.set_thumbnail(url=self.bot.user.avatar.url)
+            embed.set_thumbnail(url=self.bot.user.avatar)
         except: pass
         for guild in self.bot.guilds:
             if guild.member_count < int(minimum):
@@ -136,7 +136,7 @@ class Bot_Admin(commands.Cog):
         embed.title = f'{self.bot.user.name} Admin Broadcast'
         embed.description = msg.content
         try:
-            embed.set_thumbnail(url=self.bot.user.avatar.url)
+            embed.set_thumbnail(url=self.bot.user.avatar)
         except: pass
         for guild in self.bot.guilds:
             for channel in guild.channels:
