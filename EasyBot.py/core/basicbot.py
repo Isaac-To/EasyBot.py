@@ -16,9 +16,9 @@ async def cog(client):
     if len(cogs) >= 5:
         print('This may take a while... please wait patiently')
     for cog in cogs:
-        await load_cog(client, f'cogs.{client.user.id}.{cog}')
+        await load_cog(client, f'core.cogs.{client.user.id}.{cog}')
     for cog in universal_cogs:
-        await load_cog(client, f'cogs.universal.{cog}')
+        await load_cog(client, f'core.cogs.universal.{cog}')
 
 async def load_cog(client, path):
     try:
@@ -59,8 +59,8 @@ def main(token):
         await inter.response.send_message(error)
 
     #start bot
+    chdir(path.dirname(path.abspath(__file__)))
     try:
-        chdir(path.dirname(path.abspath(__file__)))
         logging.basicConfig(filename=f'../logs/{strftime("%Y%m%d%H%M")}.log', encoding='utf-8', level=logging.DEBUG)
         bot.run(token)
     except Exception as e:
